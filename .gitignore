@@ -8,6 +8,8 @@
 *.iml
 .externalNativeBuild
 
+.kotlintest
+
 /local.properties
 .gradle
 build/
