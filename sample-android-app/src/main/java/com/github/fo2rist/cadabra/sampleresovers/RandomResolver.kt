@@ -1,4 +1,4 @@
-package com.github.fo2rist.cadabra.colorsexperimen
+package com.github.fo2rist.cadabra.sampleresovers
 
 import com.github.fo2rist.cadabra.Resolver
 import com.github.fo2rist.cadabra.Variant

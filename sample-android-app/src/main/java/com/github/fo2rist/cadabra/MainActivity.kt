@@ -5,10 +5,14 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import com.github.fo2rist.cadabra.colorsexperimen.GreetingExperiment
-import com.github.fo2rist.cadabra.colorsexperimen.GreetingVariants
+import com.github.fo2rist.cadabra.greetingexperiment.GreetingExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.GreetingVariants
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * Sample activity.
+ * Demonstrates how the config can be fetched and used to conduct the experiment.
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

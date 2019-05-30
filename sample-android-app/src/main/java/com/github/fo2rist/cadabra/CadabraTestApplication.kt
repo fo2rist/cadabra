@@ -1,10 +1,14 @@
 package com.github.fo2rist.cadabra
 
 import android.app.Application
-import com.github.fo2rist.cadabra.colorsexperimen.GreetingExperiment
-import com.github.fo2rist.cadabra.colorsexperimen.GreetingVariants
-import com.github.fo2rist.cadabra.colorsexperimen.RandomResolver
+import com.github.fo2rist.cadabra.greetingexperiment.GreetingExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.GreetingVariants
+import com.github.fo2rist.cadabra.sampleresovers.RandomResolver
 
+/**
+ * Sample app class.
+ * Demonstrates how to register the experiment on the app creation.
+ */
 class CadabraTestApplication : Application() {
 
     override fun onCreate() {
