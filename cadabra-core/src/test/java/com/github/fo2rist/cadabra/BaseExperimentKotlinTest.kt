@@ -1,7 +1,8 @@
 package com.github.fo2rist.cadabra
 
-import com.github.fo2rist.cadabra.SimpleTestVariants.A
-import com.github.fo2rist.cadabra.SimpleTestVariants.B
+import com.github.fo2rist.cadabra.testdata.SimpleVariants
+import com.github.fo2rist.cadabra.testdata.SimpleVariants.A
+import com.github.fo2rist.cadabra.testdata.SimpleVariants.B
 import io.kotlintest.data.forall
 import io.kotlintest.matchers.collections.shouldContainAll
 import io.kotlintest.shouldBe
@@ -9,9 +10,9 @@ import io.kotlintest.specs.WordSpec
 import io.kotlintest.tables.row
 
 private val BASE_EXPERIMENT_OF_KOTLIN_CLASS =
-    object : BaseExperiment<SimpleTestVariants>(SimpleTestVariants::class) {}
+    object : BaseExperiment<SimpleVariants>(SimpleVariants::class) {}
 private val BASE_EXPERIMENT_OF_JAVA_CLASS =
-    object : BaseExperiment<SimpleTestVariants>(SimpleTestVariants::class.java) {}
+    object : BaseExperiment<SimpleVariants>(SimpleVariants::class.java) {}
 
 class BaseExperimentKotlinTest : WordSpec({
     "BaseExperiment" should {
@@ -30,11 +31,3 @@ class BaseExperimentKotlinTest : WordSpec({
         }
     }
 })
-
-private enum class SimpleTestVariants(
-    override val id: VariantId
-) : Variant {
-    A("a"),
-    B("b"),
-    ;
-}
