@@ -10,6 +10,7 @@ test-pattern: # Configure exclusions for test sources
     - '.*/test/.*'
     - '.*/androidTest/.*'
     - '.*/sharedTest/.*'
+    - '.*TestData.kt'
     - '.*Test.kt'
     - '.*Spec.kt'
     - '.*Spek.kt'
