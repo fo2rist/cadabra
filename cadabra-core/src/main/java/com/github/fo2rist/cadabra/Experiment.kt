@@ -38,13 +38,13 @@ interface Experiment<V>
  * @param V enum that defines all available variants for the experiment.
  */
 abstract class BaseExperiment<V>(
-    variantsEnum: Class<V>
+    variantsClass: Class<V>
 ) : Experiment<V> where V : Variant, V : Enum<V> {
 
-    constructor(variantsEnum: KClass<V>) : this(variantsEnum.java)
+    constructor(variantsClass: KClass<V>) : this(variantsClass.java)
 
     /**
      * All variants from [V].
      */
-    override val variants = variantsEnum.enumConstants.toList()
+    override val variants = variantsClass.enumConstants.toList()
 }
