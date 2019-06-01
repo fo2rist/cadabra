@@ -1,12 +1,15 @@
 package com.github.fo2rist.cadabra
 
+import kotlin.reflect.KClass
+
 /**
- * Cadabra A/B experiments entry point.
+ * Cadabra A/B experiments.
+ *
  * To use:
  *  - create and [Experiment] with [Variant]s for this experiments
  *  - create [Resolver] or use one of the predefined to define which variant ot use for particular user/session.
- *  - register experiments via [Cadabra.Config]
- *  - when it's time to apply experimental parameters get the variant via [getExperimentVariant]
+ *  - register experiments via [Cadabra.config]'s [CadabraConfig.registerExperiment]
+ *  - when it's time to apply experimental parameters get the variant via [Cadabra.instance]'s [getExperimentVariant]
  */
 interface Cadabra {
 
@@ -16,48 +19,65 @@ interface Cadabra {
      */
     fun <E : Experiment<V>, V : Variant> getExperimentVariant(experiment: E): V
 
+    /**
+     * Get experiment variant to apply for this user/session by [Variant] class.
+     * Only works if the experiment is registered anonymously via [Variant].
+     */
+    fun <V : Variant> getExperimentVariant(variantClass: Class<V>): V
+
+    /**
+     * Get experiment variant to apply for this user/session by [Variant] class.
+     * Only works if the experiment is registered anonymously via [Variant].
+     */
+    fun <V : Variant> getExperimentVariant(variantClass: KClass<V>): V
+
     companion object {
+        /**
+         * Entry point Cadabra experiment variants usage.
+         */
         val instance: Cadabra
+            get() = CadabraImpl
+
+        /**
+         * Entry point for Cadabra configuration.
+         * Use it at the application startup to keep all experiments configuration in one place.
+         */
+        val config: CadabraConfig
             get() = CadabraImpl
     }
 
-    /**
-     * Entry point for Cadabra configuration.
-     * Use it at the application startup
-     */
-    object Config {
-        fun <E, V> registerExperiment(
-            experiment: E,
-            resolver: Resolver<V>
-        ): Config where E : Experiment<V>, V : Variant, V : Enum<V> {
-            CadabraImpl.registerExperiment(experiment, resolver)
-            return this
-        }
-    }
 }
 
-internal object CadabraImpl : Cadabra {
-
-    private val resolversMap: MutableMap<String, Pair<Experiment<*>, Resolver<*>>> = mutableMapOf()
-
-    override fun <E : Experiment<V>, V : Variant> getExperimentVariant(experiment: E): V {
-        return resolversMap[experiment.id]?.second?.variant as? V
-            ?: throw IllegalStateException()
-    }
-
-    internal fun <E, V> registerExperiment(
-        experiment: E,
-        resolver: Resolver<V>
-    ) where E : Experiment<V>, V : Variant, V : Enum<V> {
-        check(experiment.id !in resolversMap) { "Experiment already registered: $experiment" }
-
-        resolversMap[experiment.id] = Pair(experiment, resolver)
-    }
+/**
+ * Cadabra's configuration.
+ */
+interface CadabraConfig {
 
     /**
-     * Unregister all experiments.
+     * Register experiment.
+     * An experiment can only be used after it's registered.
+     * @throws IllegalStateException if the experiment with the same ID is already registered.
      */
-    internal fun reset(){
-        resolversMap.clear()
-    }
+    fun <E, V> registerExperiment(
+        experiment: E,
+        resolver: Resolver<V>
+    ): CadabraConfig where E : Experiment<V>, V : Variant, V : Enum<V>
+
+    /**
+     * Register "anonymous" experiment for given variants.
+     * Creates a default [Experiment] for given variants using [variantsClass] enum name as ID.
+     */
+    fun <V> registerExperiment(
+        variantsClass: Class<V>,
+        resolver: Resolver<V>
+    ): CadabraConfig where V : Variant, V : Enum<V>
+
+    /**
+     * Register "anonymous" experiment for given variants.
+     * Creates a default [Experiment] for given variants using [variantsClass] enum name as ID.
+     */
+    fun <V> registerExperiment(
+        variantsClass: KClass<V>,
+        resolver: Resolver<V>
+    ): CadabraConfig where V : Variant, V : Enum<V>
 }

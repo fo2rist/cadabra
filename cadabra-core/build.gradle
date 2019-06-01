@@ -15,7 +15,7 @@ dependencies {
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    //JUnit5 (Required) Writing and executing Unit Tests on the JUnit Platform
+    //JUnit5 (Required for kotlintest and spek)
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.4.2"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.4.2"
 }

@@ -14,7 +14,7 @@ class CadabraTestApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Cadabra.Config
+        Cadabra.config
             .registerExperiment(
                 GreetingExperiment,
                 RandomResolver(GreetingVariants::class)
