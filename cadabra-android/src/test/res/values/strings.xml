@@ -1,0 +1,4 @@
+<resources>
+    <string name="greeting_title_a">test A</string>
+    <string name="greeting_title_b">test B</string>
+</resources>

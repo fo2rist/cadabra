@@ -66,6 +66,7 @@ interface CadabraConfig {
     /**
      * Register "anonymous" experiment for given variants.
      * Creates a default [Experiment] for given variants using [variantsClass] enum name as ID.
+     * @throws IllegalStateException if the experiment with the same ID is already registered.
      */
     fun <V> registerExperiment(
         variantsClass: Class<V>,
@@ -75,6 +76,7 @@ interface CadabraConfig {
     /**
      * Register "anonymous" experiment for given variants.
      * Creates a default [Experiment] for given variants using [variantsClass] enum name as ID.
+     * @throws IllegalStateException if the experiment with the same ID is already registered.
      */
     fun <V> registerExperiment(
         variantsClass: KClass<V>,

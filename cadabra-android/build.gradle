@@ -20,10 +20,13 @@ android {
     }
 
     testOptions {
-        unitTests.all {
-            useJUnitPlatform()
-            testLogging {
-                events 'PASSED', 'FAILED', 'SKIPPED'
+        unitTests {
+            includeAndroidResources = true
+            all {
+                useJUnitPlatform()
+                testLogging {
+                    events 'PASSED', 'FAILED', 'SKIPPED'
+                }
             }
         }
     }
@@ -43,6 +46,11 @@ dependencies {
     //JUnit5 (Required for kotlintest and spek)
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.4.2"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.4.2"
+    //Robolectric
+    testImplementation 'org.robolectric:robolectric:4.3'
+    testImplementation 'junit:junit:4.12'
+    //vintage engine is required for Robolectic tests which need JUnit4
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.4.2"
 }
 
 repositories {
