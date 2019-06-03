@@ -51,6 +51,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     //vintage engine is required for Robolectic tests which need JUnit4
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.4.2"
+
+    //Mockito
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 }
 
 repositories {

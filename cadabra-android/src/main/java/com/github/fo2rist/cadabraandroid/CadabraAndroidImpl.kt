@@ -1,9 +1,9 @@
 package com.github.fo2rist.cadabraandroid
 
 import android.content.Context
-import android.support.annotation.StringRes
 import com.github.fo2rist.cadabra.Cadabra
 import com.github.fo2rist.cadabra.Variant
+import kotlin.reflect.KClass
 
 internal object CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance {
 
@@ -17,30 +17,14 @@ internal object CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance
         appContext = context.applicationContext
     }
 
-    /**
-     * Unregister context.
-     */
-    internal fun deinitialize() {
-        appContext = null
+    override fun getExperimentContext(variantClass: KClass<out Variant>): VariantResources {
+        return getExperimentContext(variantClass.java)
     }
 
-    override fun getVariantResources(variant: Variant): VariantResources {
-        checkNotNull(appContext) { "Must be initialized with android context to access resources" }.also { context ->
-            return object : VariantResources {
-                override val variant = variant
-
-                @StringRes
-                override fun getStringRes(@StringRes defaultOptionId: Int): Int {
-                    val defaultResourceName = context.resources.getResourceEntryName(defaultOptionId)
-                    val variantName = variant.id.toLowerCase()
-                    val resourceName = defaultResourceName.replaceAfterLast("_", variantName)
-                    return context.resources.getIdentifier(resourceName, "string", context.packageName)
-                }
-
-                override fun getString(@StringRes defaultOptionId: Int): String {
-                    return context.resources.getString(getStringRes(defaultOptionId))
-                }
-            }
+    override fun getExperimentContext(variantClass: Class<out Variant>): VariantResources {
+        checkNotNull(appContext) { "Must be initialized with android context to access resources" }.let { context ->
+            val variant = getExperimentVariant(variantClass)
+            return ExperimentContext(variant, VariantResourcesImpl(context, variant))
         }
     }
 }

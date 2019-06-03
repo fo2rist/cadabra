@@ -1,5 +1,6 @@
 package com.github.fo2rist.cadabraandroid
 
+import android.content.Context
 import android.support.annotation.StringRes
 import com.github.fo2rist.cadabra.Variant
 
@@ -17,8 +18,6 @@ import com.github.fo2rist.cadabra.Variant
  *  getStringRes(R.string.title_a), getLayout(R.layout.layout_a) are called.
  */
 interface VariantResources {
-    val variant: Variant
-
     /**
      * Get string res ID.
      * @param defaultOptionId default res id to be used for name resolving.
@@ -33,4 +32,27 @@ interface VariantResources {
      * @return string for [defaultOptionId] when no variant-specific resource found.
      */
     fun getString(@StringRes defaultOptionId: Int): String
+}
+
+/**
+ * Default [VariantResources] implementation for Android resources access.
+ */
+internal class VariantResourcesImpl(
+    private val context: Context,
+    private val variant: Variant
+) : VariantResources {
+
+    @StringRes
+    override fun getStringRes(@StringRes defaultOptionId: Int): Int {
+        val defaultResourceName = context.resources.getResourceEntryName(defaultOptionId)
+        val variantName = variant.id.toLowerCase()
+        val resourceName = defaultResourceName.replaceAfterLast("_", variantName)
+
+        return context.resources.getIdentifier(resourceName, "string", context.packageName)
+    }
+
+    override fun getString(@StringRes defaultOptionId: Int): String {
+        val stringResId = getStringRes(defaultOptionId)
+        return context.resources.getString(stringResId)
+    }
 }

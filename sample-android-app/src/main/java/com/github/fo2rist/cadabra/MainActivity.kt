@@ -22,15 +22,17 @@ class MainActivity : AppCompatActivity() {
 
         val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment)
         fab1.setOnClickListener {
-            when(firstExperimentVariant.type) {
+            when (firstExperimentVariant.type) {
                 GreetWith.TOAST -> showToast(firstExperimentVariant.message)
                 GreetWith.SNACK -> showSnackbar(firstExperimentVariant.message)
             }
         }
 
-        val secondExperimentVariant = CadabraAndroid.instance.getExperimentVariant(AutoResourceVariants::class)
         fab2.setOnClickListener {
-            showSnackbar(CadabraAndroid.instance.getVariantResources(secondExperimentVariant).getStringRes(R.string.greeting_title_a))
+            showSnackbar(
+                CadabraAndroid.instance.getExperimentContext(AutoResourceVariants::class)
+                    .getStringRes(R.string.greeting_title_a)
+            )
         }
 
         setSupportActionBar(toolbar)

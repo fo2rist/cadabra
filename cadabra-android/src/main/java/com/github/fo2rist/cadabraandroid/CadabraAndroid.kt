@@ -5,21 +5,28 @@ import com.github.fo2rist.cadabra.Cadabra
 import com.github.fo2rist.cadabra.CadabraConfig
 import com.github.fo2rist.cadabra.Variant
 import com.github.fo2rist.cadabraandroid.CadabraAndroid.Companion.initialize
+import kotlin.reflect.KClass
 
 /**
  * Android-specific cadabra extension that supports resources injection.
  * Usage:
  * - register experiment with [Cadabra.config]
  * - initialize context with [initialize]
- * - access resources associated with experiment via [getVariantResources], see [VariantResources] for details
+ * - access resources associated with experiment via [getExperimentContext], see [VariantResources] for details
  */
 interface CadabraAndroid : Cadabra {
 
     /**
-     * Get Android resources accessor for given variant.
+     * Get Android resources accessor for active experiment variant.
      * @throws IllegalStateException if was not initialized via [initialize].
      */
-    fun getVariantResources(variant: Variant): VariantResources
+    fun getExperimentContext(variantClass: KClass<out Variant>): VariantResources
+
+    /**
+     * Get Android resources accessor for active experiment variant.
+     * @throws IllegalStateException if was not initialized via [initialize].
+     */
+    fun getExperimentContext(variantClass: Class<out Variant>): VariantResources
 
     companion object {
 
