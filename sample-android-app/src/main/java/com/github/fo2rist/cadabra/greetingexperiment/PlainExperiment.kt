@@ -1,7 +1,11 @@
 package com.github.fo2rist.cadabra.greetingexperiment
 
 import android.support.annotation.StringRes
-import com.github.fo2rist.cadabra.*
+import com.github.fo2rist.cadabra.BaseExperiment
+import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
+import com.github.fo2rist.cadabra.R
+import com.github.fo2rist.cadabra.Variant
+import com.github.fo2rist.cadabra.VariantId
 
 /**
  * Sample experiment configuration.
@@ -17,17 +21,17 @@ internal enum class PlainVariants(
     override val id: VariantId,
     @StringRes
     val message: Int,
-    var type: GreetWith
+    var type: MessageStyle
 ) : Variant {
     A(
         "A",
         message = R.string.greeting_title_a,
-        type = GreetWith.TOAST
+        type = MessageStyle.TOAST
     ),
     B(
         "B",
         message = R.string.greeting_title_b,
-        type = GreetWith.SNACK
+        type = MessageStyle.SNACK
     ),
     ;
 }

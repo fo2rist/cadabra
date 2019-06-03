@@ -5,7 +5,7 @@ import com.github.fo2rist.cadabra.Cadabra
 import com.github.fo2rist.cadabra.Variant
 import kotlin.reflect.KClass
 
-internal object CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance {
+internal class CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance {
 
     private var appContext: Context? = null
 

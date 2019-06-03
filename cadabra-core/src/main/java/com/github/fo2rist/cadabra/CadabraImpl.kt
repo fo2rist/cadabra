@@ -5,7 +5,7 @@ import kotlin.reflect.KClass
 /**
  * Single internal entry point for experiments registration and access.
  */
-internal object CadabraImpl : Cadabra, CadabraConfig {
+internal class CadabraImpl : Cadabra, CadabraConfig {
 
     private val resolversMap: MutableMap<String, Pair<Experiment<*>, Resolver<*>>> = mutableMapOf()
 
@@ -55,12 +55,5 @@ internal object CadabraImpl : Cadabra, CadabraConfig {
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
         return registerExperiment(variantsClass.java, resolver)
-    }
-
-    /**
-     * Unregister all experiments.
-     */
-    internal fun reset(){
-        resolversMap.clear()
     }
 }

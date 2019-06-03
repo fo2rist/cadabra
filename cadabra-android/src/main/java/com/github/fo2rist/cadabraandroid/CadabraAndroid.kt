@@ -30,20 +30,13 @@ interface CadabraAndroid : Cadabra {
 
     companion object {
 
-        /**
-         * Initialize Cadabra for resources access.
-         * Initialization is required prior resources usage but not required to register and access experiments.
-         * [Context.getApplicationContext] will be used by Cadabra as the context.
-         */
-        fun initialize(context: Context) {
-            CadabraAndroidImpl.initialize(context)
-        }
+        private val _instance = CadabraAndroidImpl()
 
         /**
          * Entry point CadabraAndroid experiment variants usage.
          */
         val instance: CadabraAndroid
-            get() = CadabraAndroidImpl
+            get() = _instance
 
         /**
          * Entry point for Cadabra configuration.
@@ -51,5 +44,14 @@ interface CadabraAndroid : Cadabra {
          */
         val config: CadabraConfig
             get() = Cadabra.config
+
+        /**
+         * Initialize Cadabra for resources access.
+         * Initialization is required prior resources usage but not required to register and access experiments.
+         * [Context.getApplicationContext] will be used by Cadabra as the context.
+         */
+        fun initialize(context: Context) {
+            _instance.initialize(context)
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
 import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceVariants
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
@@ -23,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment)
         fab1.setOnClickListener {
             when (firstExperimentVariant.type) {
-                GreetWith.TOAST -> showToast(firstExperimentVariant.message)
-                GreetWith.SNACK -> showSnackbar(firstExperimentVariant.message)
+                MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
+                MessageStyle.SNACK -> showSnackbar(firstExperimentVariant.message)
             }
         }
 

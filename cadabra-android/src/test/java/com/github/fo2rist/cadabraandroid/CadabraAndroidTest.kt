@@ -13,8 +13,7 @@ import kotlin.test.assertEquals
 
 /**
  * Integration test to make sure actual resources are used when the real context is present.
- * Robolectric serves as the provider of sort of real context good enough to access resources.
- * So far Robolectric test coverage is broken for JUnit5 so other it's not heavily used for unit-tests.
+ * Robolectric serves as the provider of sorta real context, good enough to access resources.
  */
 @RunWith(RobolectricTestRunner::class)
 class CadabraAndroidTest {

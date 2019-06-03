@@ -13,37 +13,39 @@ import io.kotlintest.specs.WordSpec
 private val EXPERIMENT1 = SimpleExperiment()
 private val EXPERIMENT2 = SimpleExperiment()
 
+private lateinit var cadabra: CadabraImpl
+
 class CadabraImplKotlinTest : WordSpec({
     "registerExperiment(Experiment, Resolver)" should {
         "not register the same experiment twice" {
-            CadabraImpl.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+            cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
 
             shouldThrow<IllegalStateException> {
-                CadabraImpl.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+                cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
             }
         }
 
         "not register experiments with the same ID" {
-            CadabraImpl.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+            cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
 
             shouldThrow<IllegalStateException> {
-                CadabraImpl.registerExperiment(EXPERIMENT2, SimpleStaticResolver())
+                cadabra.registerExperiment(EXPERIMENT2, SimpleStaticResolver())
             }
         }
     }
 
     "registerExperiment(Variant, Resolver)" should {
         "not register experiments with the same variants" {
-            CadabraImpl.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
+            cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
 
             shouldThrow<IllegalStateException> {
-                CadabraImpl.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
+                cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
             }
         }
 
         "accept Java class as variants" {
             shouldNotThrow<Exception> {
-                CadabraImpl.registerExperiment(SimpleVariants::class.java, SimpleStaticResolver())
+                cadabra.registerExperiment(SimpleVariants::class.java, SimpleStaticResolver())
             }
         }
     }
@@ -52,30 +54,30 @@ class CadabraImplKotlinTest : WordSpec({
 
         "throw exception when experiment not registered" {
             shouldThrow<java.lang.IllegalStateException> {
-                CadabraImpl.getExperimentVariant(EXPERIMENT1)
+                cadabra.getExperimentVariant(EXPERIMENT1)
             }
         }
 
         "return variant when experiment registered via Experiment instance" {
-            CadabraImpl.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+            cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
 
-            CadabraImpl.getExperimentVariant(EXPERIMENT1) should beOfType<SimpleVariants>()
+            cadabra.getExperimentVariant(EXPERIMENT1) should beOfType<SimpleVariants>()
         }
 
         "return variant when experiment registered via Variant class" {
-            CadabraImpl.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
+            cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
 
-            CadabraImpl.getExperimentVariant(SimpleVariants::class) should beOfType<SimpleVariants>()
+            cadabra.getExperimentVariant(SimpleVariants::class) should beOfType<SimpleVariants>()
         }
 
         "return variant when experiment registered via Variant Java class" {
-            CadabraImpl.registerExperiment(SimpleVariants::class.java, SimpleStaticResolver())
+            cadabra.registerExperiment(SimpleVariants::class.java, SimpleStaticResolver())
 
-            CadabraImpl.getExperimentVariant(SimpleVariants::class.java) should beOfType<SimpleVariants>()
+            cadabra.getExperimentVariant(SimpleVariants::class.java) should beOfType<SimpleVariants>()
         }
     }
 }) {
     override fun beforeTest(testCase: TestCase) {
-        CadabraImpl.reset()
+        cadabra = CadabraImpl()
     }
 }

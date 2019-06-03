@@ -32,20 +32,19 @@ interface Cadabra {
     fun <V : Variant> getExperimentVariant(variantClass: KClass<V>): V
 
     companion object {
+
+        private val _instance = CadabraImpl()
         /**
          * Entry point Cadabra experiment variants usage.
          */
-        val instance: Cadabra
-            get() = CadabraImpl
+        val instance: Cadabra = _instance
 
         /**
          * Entry point for Cadabra configuration.
          * Use it at the application startup to keep all experiments configuration in one place.
          */
-        val config: CadabraConfig
-            get() = CadabraImpl
+        val config: CadabraConfig = _instance
     }
-
 }
 
 /**
