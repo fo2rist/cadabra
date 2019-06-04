@@ -43,7 +43,7 @@ interface CadabraAndroid : Cadabra {
          * Same as [Cadabra.config].
          */
         val config: CadabraConfig
-            get() = Cadabra.config
+            get() = _instance
 
         /**
          * Initialize Cadabra for resources access.
