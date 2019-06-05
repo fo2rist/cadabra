@@ -5,7 +5,6 @@ import com.github.fo2rist.cadabra.BaseExperiment
 import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
 import com.github.fo2rist.cadabra.R
 import com.github.fo2rist.cadabra.Variant
-import com.github.fo2rist.cadabra.VariantId
 
 /**
  * Sample experiment configuration.
@@ -18,7 +17,7 @@ internal object PlainExperiment : BaseExperiment<PlainVariants>(PlainVariants::c
  * Demonstrate experiment data access via variant enum itself.
  */
 internal enum class PlainVariants(
-    override val id: VariantId,
+    override val id: String,
     @StringRes
     val message: Int,
     var type: MessageStyle

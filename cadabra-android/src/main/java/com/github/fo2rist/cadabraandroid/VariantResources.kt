@@ -15,23 +15,23 @@ import com.github.fo2rist.cadabra.Variant
  *  or layouts "layout_a", "layout_b" etc.
  *
  *  Then if the experiment is resolved to variant B, cadabra will return "title_b" and "layout_b" when
- *  getStringRes(R.string.title_a), getLayout(R.layout.layout_a) are called.
+ *  getStringResId(R.string.title_a), getLayout(R.layout.layout_a) are called.
  */
 interface VariantResources {
     /**
      * Get string res ID.
-     * @param defaultOptionId default res id to be used for name resolving.
-     * @return [defaultOptionId] when no variant-specific resource found.
+     * @param defaultResourceId default res id to be used for name resolving.
+     * @return [defaultResourceId] when no variant-specific resource found.
      */
     @StringRes
-    fun getStringRes(@StringRes defaultOptionId: Int): Int
+    fun getStringResId(@StringRes defaultResourceId: Int): Int
 
     /**
      * Get string.
-     * @param defaultOptionId default res id to be used for name resolving.
-     * @return string for [defaultOptionId] when no variant-specific resource found.
+     * @param defaultResourceId default res id to be used for name resolving.
+     * @return string for [defaultResourceId] when no variant-specific resource found.
      */
-    fun getString(@StringRes defaultOptionId: Int): String
+    fun getString(@StringRes defaultResourceId: Int): String
 }
 
 /**
@@ -39,20 +39,26 @@ interface VariantResources {
  */
 internal class VariantResourcesImpl(
     private val context: Context,
-    private val variant: Variant
+    private val variant: Variant,
+    private val resourcesResolver: ResourcesResolver = defaultResourcesResolver
 ) : VariantResources {
 
+    /**
+     * @throws android.content.res.Resources.NotFoundException if given ID doesn't exist.
+     */
     @StringRes
-    override fun getStringRes(@StringRes defaultOptionId: Int): Int {
-        val defaultResourceName = context.resources.getResourceEntryName(defaultOptionId)
-        val variantName = variant.id.toLowerCase()
-        val resourceName = defaultResourceName.replaceAfterLast("_", variantName)
-
-        return context.resources.getIdentifier(resourceName, "string", context.packageName)
+    override fun getStringResId(@StringRes defaultResourceId: Int): Int {
+        return resourcesResolver.resolveStringResource(context, defaultResourceId, variant.id)
     }
 
-    override fun getString(@StringRes defaultOptionId: Int): String {
-        val stringResId = getStringRes(defaultOptionId)
-        return context.resources.getString(stringResId)
+    /**
+     * @throws android.content.res.Resources.NotFoundException if given ID doesn't exist.
+     */
+    override fun getString(@StringRes defaultResourceId: Int): String {
+        return context.getString(getStringResId(defaultResourceId))
+    }
+
+    companion object {
+        val defaultResourcesResolver = ResourcesResolver()
     }
 }
