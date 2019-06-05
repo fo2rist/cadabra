@@ -4,14 +4,15 @@ import android.content.Context
 import com.github.fo2rist.cadabra.Cadabra
 import com.github.fo2rist.cadabra.CadabraConfig
 import com.github.fo2rist.cadabra.Variant
+import com.github.fo2rist.cadabraandroid.exceptions.NotInitializedException
 import kotlin.reflect.KClass
 
 internal class CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance, CadabraConfig by Cadabra.config {
 
-    private var appContext: Context? = null
+    private lateinit var appContext: Context
 
     fun initialize(context: Context) {
-        if (appContext != null) {
+        if (::appContext.isInitialized) {
             return
         }
 
@@ -23,9 +24,19 @@ internal class CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance,
     }
 
     override fun getExperimentContext(variantClass: Class<out Variant>): VariantResources {
-        checkNotNull(appContext) { "Must be initialized with android context to access resources" }.let { context ->
-            val variant = getExperimentVariant(variantClass)
-            return ExperimentContext(variant, VariantResourcesImpl(context, variant))
+        checkInitialized()
+
+        val variant = getExperimentVariant(variantClass)
+        return ExperimentContext(variant, VariantResourcesImpl(appContext, variant))
+    }
+
+    /**
+     * @throws NotInitializedException if the value is null.
+     */
+    private fun checkInitialized() {
+        if (!::appContext.isInitialized) {
+            throw NotInitializedException()
         }
     }
 }
+

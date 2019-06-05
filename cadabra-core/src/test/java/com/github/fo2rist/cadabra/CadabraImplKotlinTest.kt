@@ -1,5 +1,7 @@
 package com.github.fo2rist.cadabra
 
+import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.testdata.SimpleExperiment
 import com.github.fo2rist.cadabra.testdata.SimpleStaticResolver
 import com.github.fo2rist.cadabra.testdata.SimpleVariants
@@ -20,7 +22,7 @@ class CadabraImplKotlinTest : WordSpec({
         "not register the same experiment twice" {
             cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
 
-            shouldThrow<IllegalStateException> {
+            shouldThrow<ExperimentAlreadyRegistered> {
                 cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
             }
         }
@@ -28,7 +30,7 @@ class CadabraImplKotlinTest : WordSpec({
         "not register experiments with the same ID" {
             cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
 
-            shouldThrow<IllegalStateException> {
+            shouldThrow<ExperimentAlreadyRegistered> {
                 cadabra.registerExperiment(EXPERIMENT2, SimpleStaticResolver())
             }
         }
@@ -38,7 +40,7 @@ class CadabraImplKotlinTest : WordSpec({
         "not register experiments with the same variants" {
             cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
 
-            shouldThrow<IllegalStateException> {
+            shouldThrow<ExperimentAlreadyRegistered> {
                 cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
             }
         }
@@ -53,7 +55,7 @@ class CadabraImplKotlinTest : WordSpec({
     "getExperimentVariant" should {
 
         "throw exception when experiment not registered" {
-            shouldThrow<java.lang.IllegalStateException> {
+            shouldThrow<ExperimentNotFound> {
                 cadabra.getExperimentVariant(EXPERIMENT1)
             }
         }

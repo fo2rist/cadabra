@@ -24,7 +24,7 @@ interface CadabraAndroid : Cadabra {
 
     /**
      * Get Android resources accessor for active experiment variant.
-     * @throws IllegalStateException if was not initialized via [initialize].
+     * @throws NotInitializedException if was not initialized via [initialize].
      */
     fun getExperimentContext(variantClass: Class<out Variant>): VariantResources
 

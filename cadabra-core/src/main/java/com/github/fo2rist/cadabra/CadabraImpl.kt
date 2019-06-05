@@ -1,5 +1,7 @@
 package com.github.fo2rist.cadabra
 
+import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import kotlin.reflect.KClass
 
 /**
@@ -24,7 +26,7 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
 
     private fun <V : Variant> getExperimentVariantById(experimentId: ExperimentId): V {
         val experimentResolverPair = resolversMap[experimentId]
-            ?: throw IllegalStateException("Experiment with ID '$experimentId' is not registered")
+            ?: throw ExperimentNotFound("Experiment with ID '$experimentId' is not registered")
 
         return experimentResolverPair.second.variant as V
     }
@@ -33,7 +35,9 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         experiment: E,
         resolver: Resolver<V>
     ): CadabraConfig where E : Experiment<V>, V : Variant, V : Enum<V> {
-        check(experiment.id !in resolversMap) { "Experiment already registered: $experiment" }
+        if (experiment.id in resolversMap) {
+            throw ExperimentAlreadyRegistered("Experiment already registered: $experiment")
+        }
 
         resolversMap[experiment.id] = Pair(experiment, resolver)
         return this
