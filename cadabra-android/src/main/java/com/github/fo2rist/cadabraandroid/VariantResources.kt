@@ -1,6 +1,7 @@
 package com.github.fo2rist.cadabraandroid
 
 import android.content.Context
+import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import com.github.fo2rist.cadabra.Variant
 
@@ -15,23 +16,34 @@ import com.github.fo2rist.cadabra.Variant
  *  or layouts "layout_a", "layout_b" etc.
  *
  *  Then if the experiment is resolved to variant B, cadabra will return "title_b" and "layout_b" when
- *  getStringResId(R.string.title_a), getLayout(R.layout.layout_a) are called.
+ *  getStringId(R.string.title_a), getLayoutId(R.layout.layout_a) are called.
  */
 interface VariantResources {
     /**
-     * Get string res ID.
-     * @param defaultResourceId default res id to be used for name resolving.
+     * Get string res ID for variant.
+     * @param defaultResourceId default string ID to be used as the base name and default value.
      * @return [defaultResourceId] when no variant-specific resource found.
+     * @throws android.content.res.Resources.NotFoundException if [defaultResourceId] doesn't exist.
      */
     @StringRes
-    fun getStringResId(@StringRes defaultResourceId: Int): Int
+    fun getStringId(@StringRes defaultResourceId: Int): Int
 
     /**
-     * Get string.
+     * Get string for variant.
      * @param defaultResourceId default res id to be used for name resolving.
      * @return string for [defaultResourceId] when no variant-specific resource found.
+     * @throws android.content.res.Resources.NotFoundException if [defaultResourceId] doesn't exist.
      */
     fun getString(@StringRes defaultResourceId: Int): String
+
+    /**
+     * Get layout res ID for variant.
+     * @param defaultResourceId default layout ID to be used as the base name and default value
+     * @return [defaultResourceId] when no variant-specific resource found.
+     * @throws android.content.res.Resources.NotFoundException if [defaultResourceId] doesn't exist.
+     */
+    @LayoutRes
+    fun getLayoutId(@LayoutRes defaultResourceId: Int): Int
 }
 
 /**
@@ -43,22 +55,17 @@ internal class VariantResourcesImpl(
     private val resourcesResolver: ResourcesResolver = defaultResourcesResolver
 ) : VariantResources {
 
-    /**
-     * @throws android.content.res.Resources.NotFoundException if given ID doesn't exist.
-     */
     @StringRes
-    override fun getStringResId(@StringRes defaultResourceId: Int): Int {
-        return resourcesResolver.resolveStringResource(context, defaultResourceId, variant.id)
-    }
+    override fun getStringId(@StringRes defaultResourceId: Int): Int =
+        resourcesResolver.resolveStringResource(context, defaultResourceId, variant.id)
 
-    /**
-     * @throws android.content.res.Resources.NotFoundException if given ID doesn't exist.
-     */
-    override fun getString(@StringRes defaultResourceId: Int): String {
-        return context.getString(getStringResId(defaultResourceId))
-    }
+    override fun getString(@StringRes defaultResourceId: Int): String =
+        context.resources.getString(getStringId(defaultResourceId))
+
+    override fun getLayoutId(defaultResourceId: Int): Int =
+        resourcesResolver.resolveLayoutResource(context, defaultResourceId, variant.id)
 
     companion object {
-        val defaultResourcesResolver = ResourcesResolver()
+        private val defaultResourcesResolver = ResourcesResolver()
     }
 }

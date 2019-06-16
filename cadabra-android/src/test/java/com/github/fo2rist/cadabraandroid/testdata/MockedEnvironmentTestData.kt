@@ -7,11 +7,14 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
 
-internal fun createAppContextMock(): Context {
+internal fun createAppContextMock(resources: Resources? = null): Context {
     return mock<Context>(defaultAnswer = RETURNS_DEEP_STUBS).also {
         whenever(it.applicationContext).thenReturn(it)
         whenever(it.getString(any())).thenReturn("")
         whenever(it.packageName).thenReturn("com.github.fo2rist.cadabraandroid")
+        if (resources != null){
+            whenever(it.resources).thenReturn(resources)
+        }
     }
 }
 

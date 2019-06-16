@@ -19,11 +19,11 @@ internal class CadabraAndroidImpl : CadabraAndroid, Cadabra by Cadabra.instance,
         appContext = context.applicationContext
     }
 
-    override fun getExperimentContext(variantClass: KClass<out Variant>): VariantResources {
+    override fun getExperimentContext(variantClass: KClass<out Variant>): ExperimentContext {
         return getExperimentContext(variantClass.java)
     }
 
-    override fun getExperimentContext(variantClass: Class<out Variant>): VariantResources {
+    override fun getExperimentContext(variantClass: Class<out Variant>): ExperimentContext {
         checkInitialized()
 
         val variant = getExperimentVariant(variantClass)

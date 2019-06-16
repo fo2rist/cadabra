@@ -2,6 +2,7 @@ package com.github.fo2rist.cadabraandroid
 
 import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidVariants
 import com.github.fo2rist.cadabraandroid.testdata.createAppContextMock
+import com.github.fo2rist.cadabraandroid.testdata.createResourcesMock
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
@@ -27,6 +28,9 @@ class VariantResourcesImplKotlinTest : WordSpec({
     override fun beforeTest(testCase: TestCase) {
         resourcesResolverMock = mock()
 
-        variantResources = VariantResourcesImpl(createAppContextMock(), TEST_VARIANT, resourcesResolverMock)
+        variantResources = VariantResourcesImpl(
+            createAppContextMock(createResourcesMock()),
+            TEST_VARIANT,
+            resourcesResolverMock)
     }
 }

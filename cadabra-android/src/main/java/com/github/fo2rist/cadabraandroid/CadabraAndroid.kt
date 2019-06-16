@@ -20,13 +20,13 @@ interface CadabraAndroid : Cadabra {
      * Get Android resources accessor for active experiment variant.
      * @throws IllegalStateException if was not initialized via [initialize].
      */
-    fun getExperimentContext(variantClass: KClass<out Variant>): VariantResources
+    fun getExperimentContext(variantClass: KClass<out Variant>): ExperimentContext
 
     /**
      * Get Android resources accessor for active experiment variant.
      * @throws NotInitializedException if was not initialized via [initialize].
      */
-    fun getExperimentContext(variantClass: Class<out Variant>): VariantResources
+    fun getExperimentContext(variantClass: Class<out Variant>): ExperimentContext
 
     companion object {
 

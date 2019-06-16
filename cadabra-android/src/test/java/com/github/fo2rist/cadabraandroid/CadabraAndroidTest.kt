@@ -1,10 +1,13 @@
 package com.github.fo2rist.cadabraandroid
 
+import android.content.res.Resources
 import com.github.fo2rist.cadabraandroid.test.R
 import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidStaticResolver
 import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidVariants
 import org.junit.BeforeClass
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
@@ -29,11 +32,31 @@ class CadabraAndroidTest {
         }
     }
 
+    @get:Rule
+    var exceptionRule: ExpectedException = ExpectedException.none()
+
+    private val cadabraAndroid: CadabraAndroid by lazy {
+        CadabraAndroid.instance.also { CadabraAndroid.initialize(RuntimeEnvironment.application) }
+    }
+
     @Test
     fun `getExperimentContext should return context with actual resources`() {
-        CadabraAndroid.initialize(RuntimeEnvironment.application)
+        val experimentContext = cadabraAndroid.getExperimentContext(SimpleAndroidVariants::class)
+        assertEquals(SimpleAndroidVariants.B, experimentContext.variant)
+        assertEquals(R.string.test_b, experimentContext.getStringId(R.string.test_a))
+        assertEquals("test B", experimentContext.getString(R.string.test_a))
+        assertEquals(R.layout.test_b, experimentContext.getLayoutId(R.layout.test_a))
+    }
 
-        val resources = CadabraAndroid.instance.getExperimentContext(SimpleAndroidVariants::class)
-        assertEquals("test B", resources.getString(R.string.greeting_title_a))
+    @Test
+    fun `getXyz throws exception when default resource is missing`() {
+        exceptionRule.expect(Resources.NotFoundException::class.java)
+        cadabraAndroid.getExperimentContext(SimpleAndroidVariants::class).getStringId(-1)
+
+        exceptionRule.expect(Resources.NotFoundException::class.java)
+        cadabraAndroid.getExperimentContext(SimpleAndroidVariants::class).getString(-1)
+
+        exceptionRule.expect(Resources.NotFoundException::class.java)
+        cadabraAndroid.getExperimentContext(SimpleAndroidVariants::class).getLayoutId(-1)
     }
 }

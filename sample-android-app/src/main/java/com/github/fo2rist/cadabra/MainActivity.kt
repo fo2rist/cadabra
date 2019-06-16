@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         fab2.setOnClickListener {
             showSnackbar(
                 CadabraAndroid.instance.getExperimentContext(AutoResourceVariants::class)
-                    .getStringResId(R.string.greeting_title_a)
+                    .getStringId(R.string.greeting_title_a)
             )
         }
 
