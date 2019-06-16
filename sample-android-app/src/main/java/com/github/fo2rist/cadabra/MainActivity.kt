@@ -20,8 +20,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
-        val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment)
+        val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment.INSTANCE)
         fab1.setOnClickListener {
             when (firstExperimentVariant.type) {
                 MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
@@ -35,8 +36,6 @@ class MainActivity : AppCompatActivity() {
                     .getStringId(R.string.greeting_title_a)
             )
         }
-
-        setSupportActionBar(toolbar)
     }
 
     private fun showToast(@StringRes message: Int) {

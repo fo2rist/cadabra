@@ -4,12 +4,8 @@ import com.github.fo2rist.cadabra.BaseExperiment
 import com.github.fo2rist.cadabra.Resolver
 import com.github.fo2rist.cadabra.Variant
 
-enum class SimpleVariants(
-    override val id: String
-) : Variant {
-    A("a"),
-    B("b"),
-    ;
+enum class SimpleVariants : Variant {
+    A, B
 }
 
 class SimpleExperiment : BaseExperiment<SimpleVariants>(SimpleVariants::class)

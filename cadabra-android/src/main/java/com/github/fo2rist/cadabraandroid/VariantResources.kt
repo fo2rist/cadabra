@@ -57,13 +57,13 @@ internal class VariantResourcesImpl(
 
     @StringRes
     override fun getStringId(@StringRes defaultResourceId: Int): Int =
-        resourcesResolver.resolveStringResource(context, defaultResourceId, variant.id)
+        resourcesResolver.resolveStringResource(context, defaultResourceId, variant.name)
 
     override fun getString(@StringRes defaultResourceId: Int): String =
         context.resources.getString(getStringId(defaultResourceId))
 
     override fun getLayoutId(defaultResourceId: Int): Int =
-        resourcesResolver.resolveLayoutResource(context, defaultResourceId, variant.id)
+        resourcesResolver.resolveLayoutResource(context, defaultResourceId, variant.name)
 
     companion object {
         private val defaultResourcesResolver = ResourcesResolver()
