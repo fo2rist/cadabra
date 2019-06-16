@@ -1,7 +1,5 @@
 package com.github.fo2rist.cadabra
 
-typealias VariantId = String
-
 /**
  * A single option of the particular experiment.
  * Implement this interface in the enum that defines [Experiment] options.
@@ -10,5 +8,5 @@ typealias VariantId = String
  * enum class.
  */
 interface Variant {
-    val id: VariantId
+    val id: String
 }

@@ -1,12 +1,14 @@
 package com.github.fo2rist.cadabra
 
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Toast
-import com.github.fo2rist.cadabra.greetingexperiment.GreetingExperiment
-import com.github.fo2rist.cadabra.greetingexperiment.GreetingVariants
+import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
+import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceVariants
+import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
+import com.github.fo2rist.cadabraandroid.CadabraAndroid
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -19,26 +21,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val experimentVariant = Cadabra.instance.getExperimentVariant(GreetingExperiment)
-        fab.setOnClickListener { view ->
-            when(experimentVariant.type) {
-                GreetingVariants.GreetWith.TOAST ->
-                    showGreetingToast(view, experimentVariant.message, experimentVariant.duration)
-                GreetingVariants.GreetWith.SNACK ->
-                    showGreetingSnackbar(view, experimentVariant.message, experimentVariant.duration)
+        val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment)
+        fab1.setOnClickListener {
+            when (firstExperimentVariant.type) {
+                MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
+                MessageStyle.SNACK -> showSnackbar(firstExperimentVariant.message)
             }
+        }
+
+        fab2.setOnClickListener {
+            showSnackbar(
+                CadabraAndroid.instance.getExperimentContext(AutoResourceVariants::class)
+                    .getStringId(R.string.greeting_title_a)
+            )
         }
 
         setSupportActionBar(toolbar)
     }
 
-    private fun showGreetingToast(view: View, message: CharSequence, duration: Int) {
-        Toast.makeText(view.context, message, duration)
+    private fun showToast(@StringRes message: Int) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG)
             .show()
     }
 
-    private fun showGreetingSnackbar(view: View, message: CharSequence, duration: Int) {
-        Snackbar.make(view, message, duration)
+    private fun showSnackbar(@StringRes message: Int) {
+        Snackbar.make(fab1, message, Snackbar.LENGTH_LONG)
             .show()
     }
 }

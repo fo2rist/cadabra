@@ -27,6 +27,10 @@ allprojects {
 
 //adds report aggregation tasks such as jacocoTestReport & jacocoTestReport<FLAVOR><BUILD_TYPE>
 apply plugin: "com.vanniktech.android.junit.jacoco"
+junitJacoco {
+    jacocoVersion = "0.8.4"
+    includeNoLocationClasses = true
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

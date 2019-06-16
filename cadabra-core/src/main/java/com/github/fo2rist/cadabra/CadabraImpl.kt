@@ -1,11 +1,13 @@
 package com.github.fo2rist.cadabra
 
+import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import kotlin.reflect.KClass
 
 /**
  * Single internal entry point for experiments registration and access.
  */
-internal object CadabraImpl : Cadabra, CadabraConfig {
+internal class CadabraImpl : Cadabra, CadabraConfig {
 
     private val resolversMap: MutableMap<String, Pair<Experiment<*>, Resolver<*>>> = mutableMapOf()
 
@@ -24,7 +26,7 @@ internal object CadabraImpl : Cadabra, CadabraConfig {
 
     private fun <V : Variant> getExperimentVariantById(experimentId: ExperimentId): V {
         val experimentResolverPair = resolversMap[experimentId]
-            ?: throw IllegalStateException("Experiment with ID '$experimentId' is not registered")
+            ?: throw ExperimentNotFound("Experiment with ID '$experimentId' is not registered")
 
         return experimentResolverPair.second.variant as V
     }
@@ -33,7 +35,9 @@ internal object CadabraImpl : Cadabra, CadabraConfig {
         experiment: E,
         resolver: Resolver<V>
     ): CadabraConfig where E : Experiment<V>, V : Variant, V : Enum<V> {
-        check(experiment.id !in resolversMap) { "Experiment already registered: $experiment" }
+        if (experiment.id in resolversMap) {
+            throw ExperimentAlreadyRegistered("Experiment already registered: $experiment")
+        }
 
         resolversMap[experiment.id] = Pair(experiment, resolver)
         return this
@@ -55,12 +59,5 @@ internal object CadabraImpl : Cadabra, CadabraConfig {
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
         return registerExperiment(variantsClass.java, resolver)
-    }
-
-    /**
-     * Unregister all experiments.
-     */
-    internal fun reset(){
-        resolversMap.clear()
     }
 }
