@@ -21,7 +21,7 @@ class VariantResourcesImplKotlinTest : WordSpec({
         "resolves string" {
             variantResources.getString(0)
 
-            verify(resourcesResolverMock).resolveStringResource(any(), any(), eq(TEST_VARIANT.id))
+            verify(resourcesResolverMock).resolveStringResource(any(), any(), eq(TEST_VARIANT.name))
         }
     }
 }) {
