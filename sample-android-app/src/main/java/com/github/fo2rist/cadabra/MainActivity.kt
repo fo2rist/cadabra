@@ -3,6 +3,7 @@ package com.github.fo2rist.cadabra
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
@@ -30,10 +31,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val secondExperimentContext = CadabraAndroid.instance.getExperimentContext(AutoResourceVariants::class)
         fab2.setOnClickListener {
-            showSnackbar(
-                CadabraAndroid.instance.getExperimentContext(AutoResourceVariants::class)
-                    .getStringId(R.string.greeting_title_a)
+            showAlertDialog(
+                secondExperimentContext.getStringId(R.string.greeting_title_a),
+                secondExperimentContext.getLayoutId(R.layout.greeting_layout_a)
             )
         }
     }
@@ -45,6 +47,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSnackbar(@StringRes message: Int) {
         Snackbar.make(fab1, message, Snackbar.LENGTH_LONG)
+            .show()
+    }
+
+    private fun showAlertDialog(titleResId: Int, layoutResId: Int) {
+        AlertDialog.Builder(this)
+            .setTitle(titleResId)
+            .setView(layoutResId)
             .show()
     }
 }
