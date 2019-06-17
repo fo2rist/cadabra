@@ -1,7 +1,7 @@
 package com.github.fo2rist.cadabraandroid
 
 import com.github.fo2rist.cadabraandroid.exceptions.NotInitializedException
-import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidVariants
+import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidExperiment
 import com.github.fo2rist.cadabraandroid.testdata.createAppContextMock
 import io.kotlintest.shouldNotThrow
 import io.kotlintest.shouldThrow
@@ -14,7 +14,7 @@ class CadabraAndroidImplInitializationKotlinTest : WordSpec({
     "CadabraAndroid" should {
         "throw exception if not initialized on getExperimentContext" {
             shouldThrow<NotInitializedException> {
-                cadabraAndroidImpl.getExperimentContext(SimpleAndroidVariants::class)
+                cadabraAndroidImpl.getExperimentContext(SimpleAndroidExperiment::class)
             }
         }
 

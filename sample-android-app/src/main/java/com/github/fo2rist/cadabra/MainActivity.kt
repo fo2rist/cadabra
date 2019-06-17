@@ -7,7 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
-import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceVariants
+import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment.INSTANCE)
+        val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment::class)
         fab1.setOnClickListener {
             when (firstExperimentVariant.type) {
                 MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val secondExperimentContext = CadabraAndroid.instance.getExperimentContext(AutoResourceVariants::class)
+        val secondExperimentContext = CadabraAndroid.instance.getExperimentContext(AutoResourceExperiment::class)
         fab2.setOnClickListener {
             showAlertDialog(
                 secondExperimentContext.getStringId(R.string.greeting_title_a),

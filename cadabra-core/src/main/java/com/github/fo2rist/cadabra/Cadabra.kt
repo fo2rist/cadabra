@@ -6,18 +6,12 @@ import kotlin.reflect.KClass
  * Cadabra A/B experiments.
  *
  * To use:
- *  - create and [Experiment] with [Variant]s for this experiments
+ *  - create an experiment enum implementing [Variant] interface
  *  - create [Resolver] or use one of the predefined to define which variant ot use for particular user/session.
  *  - register experiments via [Cadabra.config]'s [CadabraConfig.registerExperiment]
  *  - when it's time to apply experimental parameters get the variant via [Cadabra.instance]'s [getExperimentVariant]
  */
 interface Cadabra {
-
-    /**
-     * Get experiment variant to apply for this user/session.
-     * Will cal [Resolver.variant] every time, so make sure your resolver provides stable results if needed.
-     */
-    fun <E : Experiment<V>, V : Variant> getExperimentVariant(experiment: E): V
 
     /**
      * Get experiment variant to apply for this user/session by [Variant] class.
@@ -55,16 +49,7 @@ interface CadabraConfig {
     /**
      * Register experiment.
      * An experiment can only be used after it's registered.
-     * @throws IllegalStateException if the experiment with the same ID is already registered.
-     */
-    fun <E, V> registerExperiment(
-        experiment: E,
-        resolver: Resolver<V>
-    ): CadabraConfig where E : Experiment<V>, V : Variant, V : Enum<V>
-
-    /**
-     * Register "anonymous" experiment for given variants.
-     * Creates a default [Experiment] for given variants using [variantsClass] enum name as ID.
+     * Uses [variantsClass] enum name as ID.
      * @throws IllegalStateException if the experiment with the same ID is already registered.
      */
     fun <V> registerExperiment(
@@ -73,8 +58,9 @@ interface CadabraConfig {
     ): CadabraConfig where V : Variant, V : Enum<V>
 
     /**
-     * Register "anonymous" experiment for given variants.
-     * Creates a default [Experiment] for given variants using [variantsClass] enum name as ID.
+     * Register experiment.
+     * An experiment can only be used after it's registered.
+     * Uses [variantsClass] enum name as ID.
      * @throws IllegalStateException if the experiment with the same ID is already registered.
      */
     fun <V> registerExperiment(

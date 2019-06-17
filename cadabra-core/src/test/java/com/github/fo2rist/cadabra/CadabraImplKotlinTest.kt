@@ -2,52 +2,46 @@ package com.github.fo2rist.cadabra
 
 import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
-import com.github.fo2rist.cadabra.testdata.SimpleExperiment
-import com.github.fo2rist.cadabra.testdata.SimpleStaticResolver
-import com.github.fo2rist.cadabra.testdata.SimpleVariants
 import io.kotlintest.TestCase
 import io.kotlintest.matchers.beOfType
 import io.kotlintest.should
 import io.kotlintest.shouldNotThrow
 import io.kotlintest.shouldThrow
 import io.kotlintest.specs.WordSpec
+import com.github.fo2rist.cadabra.SimpleExperiment as SimpleExperiment2
+import com.github.fo2rist.cadabra.testdata.SimpleStaticResolver as SimpleStaticResolver1
+import com.github.fo2rist.cadabra.testdata.SimpleExperiment as SimpleExperiment1
 
-private val EXPERIMENT1 = SimpleExperiment()
-private val EXPERIMENT2 = SimpleExperiment()
+//A class with simple name that duplicates the existing one.
+private enum class SimpleExperiment : Variant { DEFAULT }
+private class SimpleStaticResolver2(
+    override var variant: SimpleExperiment2 = SimpleExperiment2.DEFAULT
+) : Resolver<SimpleExperiment2>
 
 private lateinit var cadabra: CadabraImpl
 
 class CadabraImplKotlinTest : WordSpec({
-    "registerExperiment(Experiment, Resolver)" should {
+    "registerExperiment" should {
+
         "not register the same experiment twice" {
-            cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+            cadabra.registerExperiment(SimpleExperiment1::class, SimpleStaticResolver1())
 
             shouldThrow<ExperimentAlreadyRegistered> {
-                cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+                cadabra.registerExperiment(SimpleExperiment1::class, SimpleStaticResolver1())
             }
         }
 
         "not register experiments with the same ID" {
-            cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+            cadabra.registerExperiment(SimpleExperiment1::class, SimpleStaticResolver1())
 
             shouldThrow<ExperimentAlreadyRegistered> {
-                cadabra.registerExperiment(EXPERIMENT2, SimpleStaticResolver())
-            }
-        }
-    }
-
-    "registerExperiment(Variant, Resolver)" should {
-        "not register experiments with the same variants" {
-            cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
-
-            shouldThrow<ExperimentAlreadyRegistered> {
-                cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
+                cadabra.registerExperiment(SimpleExperiment2::class, SimpleStaticResolver2())
             }
         }
 
         "accept Java class as variants" {
             shouldNotThrow<Exception> {
-                cadabra.registerExperiment(SimpleVariants::class.java, SimpleStaticResolver())
+                cadabra.registerExperiment(SimpleExperiment1::class.java, SimpleStaticResolver1())
             }
         }
     }
@@ -56,26 +50,20 @@ class CadabraImplKotlinTest : WordSpec({
 
         "throw exception when experiment not registered" {
             shouldThrow<ExperimentNotFound> {
-                cadabra.getExperimentVariant(EXPERIMENT1)
+                cadabra.getExperimentVariant(SimpleExperiment1::class)
             }
         }
 
-        "return variant when experiment registered via Experiment instance" {
-            cadabra.registerExperiment(EXPERIMENT1, SimpleStaticResolver())
+        "return variant when experiment registered via Kotlin class" {
+            cadabra.registerExperiment(SimpleExperiment1::class, SimpleStaticResolver1())
 
-            cadabra.getExperimentVariant(EXPERIMENT1) should beOfType<SimpleVariants>()
+            cadabra.getExperimentVariant(SimpleExperiment1::class) should beOfType<SimpleExperiment1>()
         }
 
-        "return variant when experiment registered via Variant class" {
-            cadabra.registerExperiment(SimpleVariants::class, SimpleStaticResolver())
+        "return variant when experiment registered via Java class" {
+            cadabra.registerExperiment(SimpleExperiment1::class.java, SimpleStaticResolver1())
 
-            cadabra.getExperimentVariant(SimpleVariants::class) should beOfType<SimpleVariants>()
-        }
-
-        "return variant when experiment registered via Variant Java class" {
-            cadabra.registerExperiment(SimpleVariants::class.java, SimpleStaticResolver())
-
-            cadabra.getExperimentVariant(SimpleVariants::class.java) should beOfType<SimpleVariants>()
+            cadabra.getExperimentVariant(SimpleExperiment1::class.java) should beOfType<SimpleExperiment1>()
         }
     }
 }) {
