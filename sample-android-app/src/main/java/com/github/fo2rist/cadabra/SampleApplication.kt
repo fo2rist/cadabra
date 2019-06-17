@@ -1,9 +1,8 @@
 package com.github.fo2rist.cadabra
 
 import android.app.Application
-import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceVariants
+import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
-import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment.PlainVariants
 import com.github.fo2rist.cadabra.sampleresovers.RandomResolver
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
 
@@ -18,15 +17,15 @@ class SampleApplication : Application() {
 
         CadabraAndroid.initialize(this)
         CadabraAndroid.config
-            // register experiment via explicit Experiment object that contains variants information
+            // register experiment with properties provided via experiment variants class
             .registerExperiment(
-                PlainExperiment.INSTANCE,
-                RandomResolver(PlainVariants::class)
+                PlainExperiment::class,
+                RandomResolver(PlainExperiment::class)
             )
-            // register experiment via providing variants class directly
+            // register experiment without explicitly provided properties
             .registerExperiment(
-                AutoResourceVariants::class,
-                RandomResolver(AutoResourceVariants::class)
+                AutoResourceExperiment::class,
+                RandomResolver(AutoResourceExperiment::class)
             )
     }
 }

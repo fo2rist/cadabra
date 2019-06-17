@@ -6,7 +6,7 @@ import android.support.annotation.StringRes
 import com.github.fo2rist.cadabra.Variant
 
 /**
- * Android resources accessor for particular experiment Variant.
+ * Android resources accessor for particular experiment's Variant.
  * Automatically resolves resources (strings, layouts etc.) associated with one of experiment's [Variant].
  * Usage:
  *  - create resources named "name_<variant-name>" as usually

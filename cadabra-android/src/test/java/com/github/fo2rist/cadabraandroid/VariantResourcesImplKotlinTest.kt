@@ -1,6 +1,6 @@
 package com.github.fo2rist.cadabraandroid
 
-import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidVariants
+import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidExperiment
 import com.github.fo2rist.cadabraandroid.testdata.createAppContextMock
 import com.github.fo2rist.cadabraandroid.testdata.createResourcesMock
 import com.nhaarman.mockitokotlin2.any
@@ -10,7 +10,7 @@ import com.nhaarman.mockitokotlin2.verify
 import io.kotlintest.TestCase
 import io.kotlintest.specs.WordSpec
 
-private val TEST_VARIANT = SimpleAndroidVariants.B
+private val TEST_VARIANT = SimpleAndroidExperiment.B
 
 private lateinit var resourcesResolverMock : ResourcesResolver
 

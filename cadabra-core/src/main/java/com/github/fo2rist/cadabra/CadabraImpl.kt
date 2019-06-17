@@ -9,49 +9,34 @@ import kotlin.reflect.KClass
  */
 internal class CadabraImpl : Cadabra, CadabraConfig {
 
-    private val resolversMap: MutableMap<String, Pair<Experiment<*>, Resolver<*>>> = mutableMapOf()
-
-    override fun <E : Experiment<V>, V : Variant> getExperimentVariant(experiment: E): V {
-        return getExperimentVariantById(experiment.id)
-    }
+    private val resolversMap: MutableMap<String, Pair<Class<*>, Resolver<*>>> = mutableMapOf()
 
     override fun <V : Variant> getExperimentVariant(variantClass: Class<V>): V {
         return getExperimentVariantById(variantClass.simpleName)
     }
 
-
     override fun <V : Variant> getExperimentVariant(variantClass: KClass<V>): V {
         return getExperimentVariant(variantClass.java)
     }
 
-    private fun <V : Variant> getExperimentVariantById(experimentId: ExperimentId): V {
+    private fun <V : Variant> getExperimentVariantById(experimentId: String): V {
         val experimentResolverPair = resolversMap[experimentId]
             ?: throw ExperimentNotFound("Experiment with ID '$experimentId' is not registered")
 
         return experimentResolverPair.second.variant as V
     }
 
-    override fun <E, V> registerExperiment(
-        experiment: E,
-        resolver: Resolver<V>
-    ): CadabraConfig where E : Experiment<V>, V : Variant, V : Enum<V> {
-        if (experiment.id in resolversMap) {
-            throw ExperimentAlreadyRegistered("Experiment already registered: $experiment")
-        }
-
-        resolversMap[experiment.id] = Pair(experiment, resolver)
-        return this
-    }
-
     override fun <V> registerExperiment(
         variantsClass: Class<V>,
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
-        val experiment = object : BaseExperiment<V>(variantsClass) {
-            override val id: ExperimentId = variantsClass.simpleName
+        val id = variantsClass.experimentId
+        if (id in resolversMap) {
+            throw ExperimentAlreadyRegistered("Experiment already registered: $id")
         }
 
-        return registerExperiment(experiment, resolver)
+        resolversMap[id] = Pair(variantsClass, resolver)
+        return this
     }
 
     override fun <V> registerExperiment(
