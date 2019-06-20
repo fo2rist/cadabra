@@ -1,4 +1,4 @@
-package com.github.fo2rist.cadabra.sampleresovers
+package com.github.fo2rist.cadabra.resolvers
 
 import com.github.fo2rist.cadabra.Resolver
 import com.github.fo2rist.cadabra.Variant
@@ -6,7 +6,8 @@ import kotlin.random.Random
 import kotlin.reflect.KClass
 
 /**
- * Picks random variant every time asked.
+ * [Resolver] that picks random variant every time asked.
+ * Can be useful for testing.
  */
 class RandomResolver<V>(
     private val variantsEnum: Class<V>

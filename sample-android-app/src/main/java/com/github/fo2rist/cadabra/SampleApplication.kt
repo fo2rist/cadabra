@@ -3,7 +3,7 @@ package com.github.fo2rist.cadabra
 import android.app.Application
 import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
-import com.github.fo2rist.cadabra.sampleresovers.RandomResolver
+import com.github.fo2rist.cadabra.resolvers.RandomResolver
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
 
 /**
