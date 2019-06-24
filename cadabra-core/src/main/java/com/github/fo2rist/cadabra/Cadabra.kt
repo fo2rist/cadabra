@@ -1,5 +1,9 @@
 package com.github.fo2rist.cadabra
 
+import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotActive
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
+import com.github.fo2rist.cadabra.exceptions.UnknownVariant
 import kotlin.reflect.KClass
 
 /**
@@ -8,22 +12,37 @@ import kotlin.reflect.KClass
  * To use:
  *  - create an experiment enum implementing [Variant] interface
  *  - create [Resolver] or use one of the predefined to define which variant ot use for particular user/session.
- *  - register experiments via [Cadabra.config]'s [CadabraConfig.registerExperiment]
+ *  - register and start experiments via [Cadabra.config]
  *  - when it's time to apply experimental parameters get the variant via [Cadabra.instance]'s [getExperimentVariant]
+ *
+ *  Experiment registration:
+ *  When experiment is registered via [CadabraConfig.registerExperiment] it become discoverable by name but inactive.
+ *  For inactive experiment [getExperimentVariant] can not be used yet, to activate registered experiments use
+ *  [CadabraConfig.activateExperiments]. You can register multiple experiments and then activate as many as needed with
+ *  a single [CadabraConfig.activateExperiments] call.
+ *  Or use [CadabraConfig.startExperiment] to register and activate experiment at the same time.
  */
 interface Cadabra {
 
     /**
      * Get experiment variant to apply for this user/session by [Variant] class.
-     * Only works if the experiment is registered anonymously via [Variant].
+     * Only works if the experiment is registered and active.
+     * @see [CadabraConfig.registerExperiment]
+     * @see [CadabraConfig.startExperiment]
+     * @throws ExperimentNotFound if experiment is not registered
+     * @throws ExperimentNotActive is experiment was not activated
      */
-    fun <V : Variant> getExperimentVariant(variantClass: Class<V>): V
+    fun <V : Variant> getExperimentVariant(experiment: KClass<V>): V
 
     /**
      * Get experiment variant to apply for this user/session by [Variant] class.
-     * Only works if the experiment is registered anonymously via [Variant].
+     * Only works if the experiment is registered and active.
+     * @see [CadabraConfig.registerExperiment]
+     * @see [CadabraConfig.startExperiment]
+     * @throws ExperimentNotFound if experiment is not registered
+     * @throws ExperimentNotActive is experiment was not activated
      */
-    fun <V : Variant> getExperimentVariant(variantClass: KClass<V>): V
+    fun <V : Variant> getExperimentVariant(experiment: Class<V>): V
 
     companion object {
 
@@ -48,23 +67,49 @@ interface CadabraConfig {
 
     /**
      * Register experiment.
+     * Uses [experiment] enum name as ID.
      * An experiment can only be used after it's registered.
-     * Uses [variantsClass] enum name as ID.
-     * @throws IllegalStateException if the experiment with the same ID is already registered.
+     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
      */
     fun <V> registerExperiment(
-        variantsClass: Class<V>,
-        resolver: Resolver<V>
+        experiment: KClass<V>
     ): CadabraConfig where V : Variant, V : Enum<V>
 
     /**
      * Register experiment.
+     * Uses [experiment] enum name as ID.
      * An experiment can only be used after it's registered.
-     * Uses [variantsClass] enum name as ID.
-     * @throws IllegalStateException if the experiment with the same ID is already registered.
+     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
      */
     fun <V> registerExperiment(
-        variantsClass: KClass<V>,
+        experiment: Class<V>
+    ): CadabraConfig where V : Variant, V : Enum<V>
+
+    /**
+     * Activate previously registered experiments.
+     * Experiments previously activated will be reactivated with a new active variant specified.
+     * Experiments with unknown IDs will be ignored.
+     * @throws UnknownVariant if provided variant doesn't match registered experiment
+     */
+    fun activateExperiments(experimentsConfig: ExperimentsConfig)
+
+    /**
+     * Register & start experiment.
+     * A combination of [registerExperiment] & [activateExperiments].
+     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
+     */
+    fun <V> startExperiment(
+        experiment: KClass<V>,
+        resolver: Resolver<V>
+    ): CadabraConfig where V : Variant, V : Enum<V>
+
+    /**
+     * Register & start experiment.
+     * A combination of [registerExperiment] & [activateExperiments].
+     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
+     */
+    fun <V> startExperiment(
+        experiment: Class<V>,
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V>
 }

@@ -11,7 +11,7 @@ import kotlin.reflect.KClass
  */
 class RandomResolver<V>(
     private val variantsEnum: Class<V>
-) : Resolver<V> where V : Variant, V : Enum<V> {
+) : Resolver<V> where V : Variant {
 
     constructor(variantsEnum: KClass<V>) : this(variantsEnum.java)
 

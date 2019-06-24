@@ -9,4 +9,4 @@ import com.github.fo2rist.cadabra.Variant
  */
 class StaticResolver<V>(
     override val variant: V
-) : Resolver<V> where V : Variant, V : Enum<V>
+) : Resolver<V> where V : Variant
