@@ -3,7 +3,7 @@ package com.github.fo2rist.cadabra
 /**
  * Resolves the experiment by giving single Variant among available.
  */
-interface Resolver<V> where V : Variant, V : Enum<V> {
+interface Resolver<V> where V : Variant {
     /**
      * Get variant to be used now.
      * Note that Cadabra calls this method every time variant resolution is required, so if the same variant should be

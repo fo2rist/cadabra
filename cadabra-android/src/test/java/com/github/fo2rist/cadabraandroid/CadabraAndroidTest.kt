@@ -25,7 +25,7 @@ class CadabraAndroidTest {
         @BeforeClass
         @JvmStatic
         fun setUpClass() {
-            CadabraAndroid.config.registerExperiment(
+            CadabraAndroid.config.startExperiment(
                 SimpleAndroidExperiment::class,
                 SimpleAndroidStaticResolver(SimpleAndroidExperiment.B)
             )

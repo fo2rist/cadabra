@@ -23,6 +23,6 @@ class CadabraAndroidImplKotlinTest : WordSpec() {
 
     override fun beforeSpec(spec: Spec) {
         cadabraAndroidImpl.initialize(createAppContextMock())
-        cadabraAndroidImpl.registerExperiment(SimpleAndroidExperiment::class, SimpleAndroidStaticResolver())
+        cadabraAndroidImpl.startExperiment(SimpleAndroidExperiment::class, SimpleAndroidStaticResolver())
     }
 }

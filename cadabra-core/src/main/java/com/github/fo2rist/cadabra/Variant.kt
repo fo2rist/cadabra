@@ -1,5 +1,7 @@
 package com.github.fo2rist.cadabra
 
+import kotlin.reflect.KClass
+
 /**
  * A single option (variant) of the particular experiment.
  * Implement this interface by the enum so that each item represents the experiment variant,
@@ -18,8 +20,22 @@ interface Variant {
     val name: String
 }
 
+
 /**
- * Get ID of the experiment.
+ * Get ID (simple class name) of the experiment.
  */
-val <V> Class<V>.experimentId: String where V : Variant, V : Enum<V>
+val <V> KClass<V>.experimentId: String where V : Variant
+    get() = this.java.experimentId
+
+/**
+ * Get ID (simple class name) of the experiment.
+ */
+val <V> Class<V>.experimentId: String where V : Variant
     get() = this.simpleName
+
+/**
+ *
+ */
+internal fun <V : Variant> Class<V>.variantByName(name: String): V? {
+    return this.enumConstants.find { it.name == name }
+}

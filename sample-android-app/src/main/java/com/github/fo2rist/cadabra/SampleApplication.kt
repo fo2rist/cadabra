@@ -18,12 +18,12 @@ class SampleApplication : Application() {
         CadabraAndroid.initialize(this)
         CadabraAndroid.config
             // register experiment with properties provided via experiment variants class
-            .registerExperiment(
+            .startExperiment(
                 PlainExperiment::class,
                 RandomResolver(PlainExperiment::class)
             )
             // register experiment without explicitly provided properties
-            .registerExperiment(
+            .startExperiment(
                 AutoResourceExperiment::class,
                 RandomResolver(AutoResourceExperiment::class)
             )
