@@ -5,6 +5,7 @@ import com.github.fo2rist.cadabra.Cadabra
 import com.github.fo2rist.cadabra.CadabraConfig
 import com.github.fo2rist.cadabra.Variant
 import com.github.fo2rist.cadabraandroid.CadabraAndroid.Companion.initialize
+import com.github.fo2rist.cadabraandroid.exceptions.NotInitializedException
 import kotlin.reflect.KClass
 
 /**
