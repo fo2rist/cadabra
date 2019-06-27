@@ -11,9 +11,10 @@ import kotlin.reflect.KClass
 /**
  * Android-specific cadabra extension that supports resources injection.
  * Usage:
- * - register experiment with [Cadabra.config]
+ * - register/start experiments with [Cadabra.config]
  * - initialize context with [initialize]
  * - access resources associated with experiment via [getExperimentContext], see [VariantResources] for details
+ * @see [Cadabra] for experiment registration details
  */
 interface CadabraAndroid : Cadabra {
 

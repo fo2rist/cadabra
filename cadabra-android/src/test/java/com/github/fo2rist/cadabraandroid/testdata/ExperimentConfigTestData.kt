@@ -1,6 +1,6 @@
 package com.github.fo2rist.cadabraandroid.testdata
 
-const val INCORRECT_EXPERIMENT_CONFIG = ""
+const val INCORRECT_EXPERIMENT_CONFIG = "[]"
 
 const val EMPTY_EXPERIMENT_CONFIG = "{}"
 

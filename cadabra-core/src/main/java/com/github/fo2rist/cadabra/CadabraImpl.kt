@@ -44,8 +44,8 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         return this
     }
 
-    override fun activateExperiments(experimentsConfig: ExperimentsConfig) {
-        for ((experimentId, variantName) in experimentsConfig.entries) {
+    override fun activateExperiments(config: ExperimentsConfig) {
+        for ((experimentId, variantName) in config.entries) {
             val experiment = resolversMap[experimentId]?.first
                 ?: continue
 
@@ -54,6 +54,10 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
 
             updateResolver(experiment, StaticResolver(variant))
         }
+    }
+
+    override fun activateExperimentsAsync(configProvider: ExperimentsConfigProvider) {
+        configProvider.attach(this::activateExperiments)
     }
 
     override fun <V> startExperiment(

@@ -15,6 +15,10 @@ import org.json.JSONObject
  * @throws org.json.JSONException if the parse fails.
  */
 fun configFromJson(json: String): ExperimentsConfig {
+    if (json.isEmpty()) {
+        return ExperimentsConfig.create()
+    }
+
     val jsonObject = JSONObject(json)
 
     val keys = jsonObject.keys()

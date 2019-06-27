@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
 import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.FirebaseExperiment
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +38,11 @@ class MainActivity : AppCompatActivity() {
                 secondExperimentContext.getStringId(R.string.greeting_title_a),
                 secondExperimentContext.getLayoutId(R.layout.greeting_layout_a)
             )
+        }
+
+        val thirdExperimentContext = CadabraAndroid.instance.getExperimentContext(FirebaseExperiment::class)
+        fab3.setOnClickListener {
+            showSnackbar(thirdExperimentContext.getStringId(R.string.remote_greeting_f1))
         }
     }
 
