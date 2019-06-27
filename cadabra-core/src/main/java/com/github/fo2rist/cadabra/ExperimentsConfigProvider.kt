@@ -8,9 +8,7 @@ package com.github.fo2rist.cadabra
  */
 abstract class ExperimentsConfigProvider {
 
-    /**
-     * Function that accepts config to activate it.
-     */
+    // Function that accepts config to activate it.
     private var activateConfigFun: ((ExperimentsConfig) -> Unit)? = null
 
     /**

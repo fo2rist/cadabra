@@ -13,8 +13,9 @@ class ExperimentsConfig private constructor(
         get() = experimentVariants.entries
 
     companion object {
+
         fun create(vararg config: Pair<String, String>): ExperimentsConfig {
-            return ExperimentsConfig(mutableMapOf(*config))
+            return ExperimentsConfig(config.toMap())
         }
     }
 }
