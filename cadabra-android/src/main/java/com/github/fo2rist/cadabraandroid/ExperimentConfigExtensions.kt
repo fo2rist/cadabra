@@ -27,5 +27,6 @@ fun configFromJson(json: String): ExperimentsConfig {
         experimentId to jsonObject.getString(experimentId)
     }
 
+    @Suppress("SpreadOperator")
     return ExperimentsConfig.create(*configPairs)
 }

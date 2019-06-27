@@ -41,6 +41,7 @@ class SampleApplication : Application() {
             .activateExperimentsAsync(FirebaseConfigProvider())
     }
 
+    @Suppress("MagicNumber")
     private fun initializeFirebaseRemoteConfig() {
         // see https://firebase.google.com/docs/remote-config/use-config-android for details
         val mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
