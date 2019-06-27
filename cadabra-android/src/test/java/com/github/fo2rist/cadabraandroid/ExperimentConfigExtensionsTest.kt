@@ -19,6 +19,13 @@ class ExperimentConfigExtensionsTest {
     }
 
     @Test
+    fun `configFromJson is empty for empty string`() {
+        val experimentsConfig = configFromJson("")
+
+        assertEquals(0, experimentsConfig.entries.size)
+    }
+
+    @Test
     fun `configFromJson is empty for empty Json`() {
         val experimentsConfig = configFromJson(EMPTY_EXPERIMENT_CONFIG)
 
@@ -33,7 +40,7 @@ class ExperimentConfigExtensionsTest {
     }
 
     @Test
-    fun `configFromJson can parse multiple entiries`() {
+    fun `configFromJson can parse multiple entries`() {
         val experimentsConfig = configFromJson(TWO_EXPERIMENTS_CONFIG)
 
         assertEquals(2, experimentsConfig.entries.size)

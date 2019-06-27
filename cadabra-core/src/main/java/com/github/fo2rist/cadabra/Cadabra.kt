@@ -91,7 +91,15 @@ interface CadabraConfig {
      * Experiments with unknown IDs will be ignored.
      * @throws UnknownVariant if provided variant doesn't match registered experiment
      */
-    fun activateExperiments(experimentsConfig: ExperimentsConfig)
+    fun activateExperiments(config: ExperimentsConfig)
+
+    /**
+     * Activate previously registered experiment asynchronously.
+     * Registers the [ExperimentsConfigProvider] that can update experiments config at any time.
+     * When it provides the new config via [provideConfig][ExperimentsConfigProvider.provideConfig] it works the same
+     * way as [activateExperiments].
+     */
+    fun activateExperimentsAsync(configProvider: ExperimentsConfigProvider)
 
     /**
      * Register & start experiment.

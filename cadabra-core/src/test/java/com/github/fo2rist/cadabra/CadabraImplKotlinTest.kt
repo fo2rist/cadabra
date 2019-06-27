@@ -6,8 +6,6 @@ import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
 import com.github.fo2rist.cadabra.resolvers.StaticResolver
 import io.kotlintest.TestCase
-import io.kotlintest.matchers.beOfType
-import io.kotlintest.should
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotThrow
 import io.kotlintest.shouldThrow
@@ -19,8 +17,9 @@ import com.github.fo2rist.cadabra.testdata.SimpleExperiment as SimpleExperiment1
 private enum class SimpleExperiment : Variant { DEFAULT }
 
 private val experiment1Id = SimpleExperiment1::class.experimentId
+private val config1A = ExperimentsConfig.create(experiment1Id to SimpleExperiment1.A.name)
+private val config1B = ExperimentsConfig.create(experiment1Id to SimpleExperiment1.B.name)
 private val resolver1A = StaticResolver(SimpleExperiment1.A)
-private val resolver1B = StaticResolver(SimpleExperiment1.B)
 private val resolver2 = StaticResolver(SimpleExperiment2.DEFAULT)
 
 private lateinit var cadabra: CadabraImpl
@@ -77,7 +76,7 @@ class CadabraImplKotlinTest : WordSpec({
             }
         }
 
-        "throw ExperimentNotActive when experiment registered but not active " {
+        "throw ExperimentNotActive when experiment registered but not active" {
             cadabra.registerExperiment(SimpleExperiment1::class)
 
             shouldThrow<ExperimentNotActive> {
@@ -88,37 +87,42 @@ class CadabraImplKotlinTest : WordSpec({
         "return variant when experiment started via Kotlin class" {
             cadabra.startExperiment(SimpleExperiment1::class, resolver1A)
 
-            cadabra.getExperimentVariant(SimpleExperiment1::class) should beOfType<SimpleExperiment1>()
+            cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.A
         }
 
         "return variant when experiment started via Java class" {
             cadabra.startExperiment(SimpleExperiment1::class.java, resolver1A)
 
-            cadabra.getExperimentVariant(SimpleExperiment1::class.java) should beOfType<SimpleExperiment1>()
+            cadabra.getExperimentVariant(SimpleExperiment1::class.java) shouldBe SimpleExperiment1.A
         }
 
-        "return variant when experiment registered and activated later" {
+        "return variant when experiment activated later with activateExperiments" {
             cadabra.registerExperiment(SimpleExperiment1::class)
-            cadabra.activateExperiments(ExperimentsConfig.create(experiment1Id to SimpleExperiment1.A.name))
+            cadabra.activateExperiments(config1A)
 
             cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.A
         }
 
         "return latest activated variant" {
             cadabra.registerExperiment(SimpleExperiment1::class)
-            cadabra.activateExperiments(ExperimentsConfig.create(experiment1Id to SimpleExperiment1.A.name))
-            cadabra.activateExperiments(ExperimentsConfig.create(experiment1Id to SimpleExperiment1.B.name))
+            cadabra.activateExperiments(config1A)
+            cadabra.activateExperiments(config1B)
 
             cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.B
         }
+
+        "return variant when experiment activated later with activateExperimentsAsync" {
+            val configProvider = object : ExperimentsConfigProvider() {}
+            cadabra.registerExperiment(SimpleExperiment1::class)
+
+            cadabra.activateExperimentsAsync(configProvider)
+            configProvider.provideConfig(config1A)
+
+            cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.A
+        }
     }
 
-    "activateExperiments via resolver" should {
-
-
-    }
-
-    "activateExperiments via bulk config" should {
+    "activateExperiments" should {
 
         "ignore unknown experiment IDs" {
             shouldNotThrow<Exception> {

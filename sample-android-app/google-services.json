@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "798255363753",
+    "firebase_url": "https://cadabra-sample-app.firebaseio.com",
+    "project_id": "cadabra-sample-app",
+    "storage_bucket": "cadabra-sample-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798255363753:android:c8c833c91b275928",
+        "android_client_info": {
+          "package_name": "com.github.fo2rist.cadabra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798255363753-5j4511nqdsd6e2nmiqnuf8hvfv59bl9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6keqmsXjl9gG-D02WBSD6RZtMdgP0zVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798255363753-5j4511nqdsd6e2nmiqnuf8hvfv59bl9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
