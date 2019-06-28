@@ -1,8 +1,8 @@
 package com.github.fo2rist.cadabra.firebase
 
+import com.github.fo2rist.cadabra.firebase.helpers.ImmediateTask
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
@@ -19,6 +19,7 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
     override fun beforeTest(testCase: TestCase) {
         firebaseConfigMock = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS) {
             on { getString(any()) }.thenReturn("")
+            on { fetchAndActivate() }.thenReturn(ImmediateTask())
         }
     }
 
@@ -51,7 +52,8 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
 
                 configProvider.onAttached()
 
-                verify(firebaseConfigMock).getString(eq(CONFIG_KEY))
+                verify(firebaseConfigMock, never()).fetchAndActivate()
+                verify(firebaseConfigMock).getString(CONFIG_KEY)
             }
 
             "fetch latest config if asked but only after attached" {
@@ -66,6 +68,7 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
                 configProvider.onAttached()
 
                 verify(firebaseConfigMock).fetchAndActivate()
+                verify(firebaseConfigMock).getString(CONFIG_KEY)
             }
         }
 
