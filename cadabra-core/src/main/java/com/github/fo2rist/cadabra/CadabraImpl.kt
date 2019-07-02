@@ -1,6 +1,5 @@
 package com.github.fo2rist.cadabra
 
-import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
@@ -33,14 +32,14 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
     override fun <V> registerExperiment(
         experiment: Class<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
-        registerNew(experiment, null)
+        updateResolver(experiment, null)
         return this
     }
 
     override fun <V> registerExperiment(
         experiment: KClass<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
-        registerNew(experiment.java, null)
+        updateResolver(experiment.java, null)
         return this
     }
 
@@ -64,7 +63,7 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         experiment: KClass<V>,
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
-        registerNew(experiment.java, resolver)
+        updateResolver(experiment.java, resolver)
         return this
     }
 
@@ -72,20 +71,8 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         experiment: Class<V>,
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
-        registerNew(experiment, resolver)
-        return this
-    }
-
-    private fun <V> registerNew(
-        experiment: Class<V>,
-        resolver: Resolver<V>?
-    ) where V : Variant {
-        val experimentId = experiment.experimentId
-        if (experimentId in resolversMap) {
-            throw ExperimentAlreadyRegistered("Experiment already registered: $experimentId")
-        }
-
         updateResolver(experiment, resolver)
+        return this
     }
 
     //null resolver effectively makes the experiment inactive (waiting for start)
