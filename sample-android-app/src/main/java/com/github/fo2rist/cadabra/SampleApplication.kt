@@ -35,10 +35,10 @@ class SampleApplication : Application() {
                 AutoResourceExperiment::class,
                 RandomResolver(AutoResourceExperiment::class)
             )
-            // register experiment without activation
+            // register experiment without starting
             .registerExperiment(FirebaseExperiment::class)
-            // load experiments activation config from Firebase
-            .activateExperimentsAsync(FirebaseConfigProvider())
+            // load experiments config from Firebase
+            .startExperimentsAsync(FirebaseConfigProvider())
     }
 
     @Suppress("MagicNumber")
