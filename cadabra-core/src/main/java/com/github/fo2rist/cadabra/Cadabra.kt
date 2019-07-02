@@ -3,6 +3,7 @@ package com.github.fo2rist.cadabra
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
+import com.github.fo2rist.cadabra.exceptions.VariantNotFound
 import kotlin.reflect.KClass
 
 /**
@@ -114,5 +115,15 @@ interface CadabraConfig {
     fun <V> startExperiment(
         experiment: Class<V>,
         resolver: Resolver<V>
+    ): CadabraConfig where V : Variant, V : Enum<V>
+
+    /**
+     * Register & start experiment with default variant active.
+     * The first item of variants enum is the default one.
+     * A combination of [registerExperiment] & [startExperiments].
+     * @throws VariantNotFound if provided experiment doesn't have variants
+     */
+    fun <V> startExperiment(
+        experiment: KClass<V>
     ): CadabraConfig where V : Variant, V : Enum<V>
 }

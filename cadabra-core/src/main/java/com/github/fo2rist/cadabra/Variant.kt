@@ -20,7 +20,6 @@ interface Variant {
     val name: String
 }
 
-
 /**
  * Get ID (simple class name) of the experiment.
  */
@@ -34,8 +33,14 @@ val <V> Class<V>.experimentId: String where V : Variant
     get() = this.simpleName
 
 /**
- *
+ * Find enum item by its [Enum.name].
  */
 internal fun <V : Variant> Class<V>.variantByName(name: String): V? {
     return this.enumConstants.find { it.name == name }
 }
+
+/**
+ * Get first enum item or null if class doesn't have any.
+ */
+internal val <V : Variant> KClass<V>.defaultVariant: V?
+    get() = this.java.enumConstants?.getOrNull(0)
