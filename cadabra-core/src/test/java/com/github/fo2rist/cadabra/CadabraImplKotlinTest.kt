@@ -1,8 +1,8 @@
 package com.github.fo2rist.cadabra
 
 import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
-import com.github.fo2rist.cadabra.exceptions.ExperimentNotActive
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
 import com.github.fo2rist.cadabra.resolvers.StaticResolver
 import io.kotlintest.TestCase
@@ -76,10 +76,10 @@ class CadabraImplKotlinTest : WordSpec({
             }
         }
 
-        "throw ExperimentNotActive when experiment registered but not active" {
+        "throw ExperimentNotStarted when experiment registered but not started" {
             cadabra.registerExperiment(SimpleExperiment1::class)
 
-            shouldThrow<ExperimentNotActive> {
+            shouldThrow<ExperimentNotStarted> {
                 cadabra.getExperimentVariant(SimpleExperiment1::class)
             }
         }
@@ -96,37 +96,37 @@ class CadabraImplKotlinTest : WordSpec({
             cadabra.getExperimentVariant(SimpleExperiment1::class.java) shouldBe SimpleExperiment1.A
         }
 
-        "return variant when experiment activated later with activateExperiments" {
+        "return variant when experiment started later with startExperiments" {
             cadabra.registerExperiment(SimpleExperiment1::class)
-            cadabra.activateExperiments(config1A)
+            cadabra.startExperiments(config1A)
 
             cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.A
         }
 
-        "return latest activated variant" {
+        "return latest applied variant" {
             cadabra.registerExperiment(SimpleExperiment1::class)
-            cadabra.activateExperiments(config1A)
-            cadabra.activateExperiments(config1B)
+            cadabra.startExperiments(config1A)
+            cadabra.startExperiments(config1B)
 
             cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.B
         }
 
-        "return variant when experiment activated later with activateExperimentsAsync" {
+        "return variant when experiment started later with startExperimentsAsync" {
             val configProvider = object : ExperimentsConfigProvider() {}
             cadabra.registerExperiment(SimpleExperiment1::class)
 
-            cadabra.activateExperimentsAsync(configProvider)
+            cadabra.startExperimentsAsync(configProvider)
             configProvider.provideConfig(config1A)
 
             cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe SimpleExperiment1.A
         }
     }
 
-    "activateExperiments" should {
+    "startExperiments" should {
 
         "ignore unknown experiment IDs" {
             shouldNotThrow<Exception> {
-                cadabra.activateExperiments(ExperimentsConfig.create("DOES_NOT_EXIST" to SimpleExperiment1.A.name))
+                cadabra.startExperiments(ExperimentsConfig.create("DOES_NOT_EXIST" to SimpleExperiment1.A.name))
             }
         }
 
@@ -134,7 +134,7 @@ class CadabraImplKotlinTest : WordSpec({
             cadabra.registerExperiment(SimpleExperiment1::class)
 
             shouldThrow<UnknownVariant> {
-                cadabra.activateExperiments(ExperimentsConfig.create(experiment1Id to "DOES_NOT_EXIST"))
+                cadabra.startExperiments(ExperimentsConfig.create(experiment1Id to "DOES_NOT_EXIST"))
             }
         }
     }

@@ -2,8 +2,8 @@ package com.github.fo2rist.cadabraandroid
 
 import android.content.res.Resources
 import com.github.fo2rist.cadabraandroid.test.R
-import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidStaticResolver
 import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidExperiment
+import com.github.fo2rist.cadabraandroid.testdata.SimpleAndroidStaticResolver
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test

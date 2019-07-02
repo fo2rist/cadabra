@@ -9,7 +9,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 const val CADABRA_CONFIG_KEY = "cadabra_experiments"
 
 /**
- * [ExperimentsConfigProvider] that activates experiments automatically by Firebase Remote Config.
+ * [ExperimentsConfigProvider] that starts experiments automatically by Firebase Remote Config.
  * Loads [ExperimentsConfig] as Json from specified remote config field.
  * @see com.github.fo2rist.cadabraandroid.configFromJson
  */
@@ -22,7 +22,7 @@ class FirebaseConfigProvider : ExperimentsConfigProvider {
     /**
      * Create Firebase Config Provider.
      * Be default provider automatically fetches the default config and initiates the remote config loading.
-     * If the automatic fetching is turned off or the remote config was updated [activateExperimentFromRemoteConfig]
+     * If the automatic fetching is turned off or the remote config was updated [startExperimentFromRemoteConfig]
      * triggers re-loading.
      * @param configKey name of key to be fetched from Firebase Remote Config, be default [CADABRA_CONFIG_KEY]
      * @param fetchAutomatically automatically fetch and activate latest Firebase Config once attached to Cadabra
@@ -50,12 +50,12 @@ class FirebaseConfigProvider : ExperimentsConfigProvider {
 
     override fun onAttached() {
         if (this.useDefaults) {
-            activateExperimentFromRemoteConfig()
+            startExperimentFromRemoteConfig()
         }
 
         if (this.fetchAutomatically) {
             firebaseConfig.fetchAndActivate().addOnCompleteListener {
-                activateExperimentFromRemoteConfig()
+                startExperimentFromRemoteConfig()
             }
         }
     }
@@ -63,7 +63,7 @@ class FirebaseConfigProvider : ExperimentsConfigProvider {
     /**
      * Apply current active remote config.
      */
-    fun activateExperimentFromRemoteConfig() {
+    fun startExperimentFromRemoteConfig() {
         val experiments = firebaseConfig.getString(configKey)
         val config = configFromJson(experiments)
         provideConfig(config)

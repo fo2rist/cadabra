@@ -72,7 +72,7 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
             }
         }
 
-        "activateExperimentFromRemoteConfig" should {
+        "startExperimentFromRemoteConfig" should {
 
             "fetch the current config" {
                 val configProvider = FirebaseConfigProvider(
@@ -84,7 +84,7 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
 
                 verifyZeroInteractions(firebaseConfigMock)
 
-                configProvider.activateExperimentFromRemoteConfig()
+                configProvider.startExperimentFromRemoteConfig()
 
                 verify(firebaseConfigMock).getString(CONFIG_KEY)
                 verify(firebaseConfigMock, never()).fetchAndActivate()

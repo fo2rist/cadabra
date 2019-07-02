@@ -1,8 +1,8 @@
 package com.github.fo2rist.cadabra
 
 import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
-import com.github.fo2rist.cadabra.exceptions.ExperimentNotActive
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
+import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
 import com.github.fo2rist.cadabra.resolvers.StaticResolver
 import kotlin.reflect.KClass
@@ -25,7 +25,7 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
 
         // TODO maybe return just default option, or create registration with default option 06/22/2019
         val result = experimentResolverPair.second?.variant
-            ?: throw ExperimentNotActive("Experiment '$experiment' is not active")
+            ?: throw ExperimentNotStarted("Experiment '$experiment' is not started")
 
         return experiment.cast(result)
     }
@@ -44,7 +44,7 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         return this
     }
 
-    override fun activateExperiments(config: ExperimentsConfig) {
+    override fun startExperiments(config: ExperimentsConfig) {
         for ((experimentId, variantName) in config.entries) {
             val experiment = resolversMap[experimentId]?.first
                 ?: continue
@@ -56,8 +56,8 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         }
     }
 
-    override fun activateExperimentsAsync(configProvider: ExperimentsConfigProvider) {
-        configProvider.attach(this::activateExperiments)
+    override fun startExperimentsAsync(configProvider: ExperimentsConfigProvider) {
+        configProvider.attach(this::startExperiments)
     }
 
     override fun <V> startExperiment(
@@ -88,7 +88,7 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         updateResolver(experiment, resolver)
     }
 
-    //null resolver effectively makes the experiment inactive
+    //null resolver effectively makes the experiment inactive (waiting for start)
     private fun updateResolver(
         experiment: Class<out Variant>,
         resolver: Resolver<out Variant>?

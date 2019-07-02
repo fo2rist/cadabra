@@ -7,13 +7,13 @@ import io.kotlintest.specs.WordSpec
 private val DUMMY_CONFIG = ExperimentsConfig.create()
 
 private lateinit var experimentConfigProvider: ExperimentsConfigProvider
-private var latestActivatedConfig: ExperimentsConfig? = null
+private var latestAppliedConfig: ExperimentsConfig? = null
 private var wasAttached: Boolean = false
 
 class ExperimentsConfigProviderKotlinTest : WordSpec({
 
-    fun registerConfig(config: ExperimentsConfig) {
-        latestActivatedConfig = config
+    fun dummyApplyConfigCallback(config: ExperimentsConfig) {
+        latestAppliedConfig = config
     }
 
     "provideConfig" should {
@@ -21,15 +21,15 @@ class ExperimentsConfigProviderKotlinTest : WordSpec({
         "do nothing if not attached" {
             experimentConfigProvider.provideConfig(DUMMY_CONFIG)
 
-            latestActivatedConfig shouldBe null
+            latestAppliedConfig shouldBe null
         }
 
-        "call activation function after attached" {
-            experimentConfigProvider.attach(::registerConfig)
+        "call apply callback function after attached" {
+            experimentConfigProvider.attach(::dummyApplyConfigCallback)
 
             experimentConfigProvider.provideConfig(DUMMY_CONFIG)
 
-            latestActivatedConfig shouldBe DUMMY_CONFIG
+            latestAppliedConfig shouldBe DUMMY_CONFIG
         }
 
         "call onAttached after attached" {
@@ -40,7 +40,7 @@ class ExperimentsConfigProviderKotlinTest : WordSpec({
     }
 }) {
     override fun beforeTest(testCase: TestCase) {
-        latestActivatedConfig = null
+        latestAppliedConfig = null
         experimentConfigProvider = object : ExperimentsConfigProvider() {
             override fun onAttached() {
                 wasAttached = true
