@@ -1,6 +1,5 @@
 package com.github.fo2rist.cadabra
 
-import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
@@ -69,7 +68,6 @@ interface CadabraConfig {
      * Register experiment.
      * Uses [experiment] enum name as ID.
      * An experiment can only be used after it's registered.
-     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
      */
     fun <V> registerExperiment(
         experiment: KClass<V>
@@ -79,7 +77,6 @@ interface CadabraConfig {
      * Register experiment.
      * Uses [experiment] enum name as ID.
      * An experiment can only be used after it's registered.
-     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
      */
     fun <V> registerExperiment(
         experiment: Class<V>
@@ -104,7 +101,6 @@ interface CadabraConfig {
     /**
      * Register & start experiment.
      * A combination of [registerExperiment] & [startExperiments].
-     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
      */
     fun <V> startExperiment(
         experiment: KClass<V>,
@@ -114,7 +110,6 @@ interface CadabraConfig {
     /**
      * Register & start experiment.
      * A combination of [registerExperiment] & [startExperiments].
-     * @throws ExperimentAlreadyRegistered is the experiment with the same ID already registered
      */
     fun <V> startExperiment(
         experiment: Class<V>,

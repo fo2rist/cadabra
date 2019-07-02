@@ -1,6 +1,5 @@
 package com.github.fo2rist.cadabra
 
-import com.github.fo2rist.cadabra.exceptions.ExperimentAlreadyRegistered
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
@@ -28,10 +27,10 @@ class CadabraImplKotlinTest : WordSpec({
 
     "registerExperiment" should {
 
-        "not register experiments with the same ID" {
+        "allow re-registration of experiment with the same ID" {
             cadabra.registerExperiment(SimpleExperiment1::class)
 
-            shouldThrow<ExperimentAlreadyRegistered> {
+            shouldNotThrow<Exception> {
                 cadabra.registerExperiment(SimpleExperiment2::class)
             }
         }
@@ -45,19 +44,11 @@ class CadabraImplKotlinTest : WordSpec({
 
     "startExperiment" should {
 
-        "not start already registered experiment" {
+        "allow starting already registered experiment" {
             cadabra.registerExperiment(SimpleExperiment1::class)
 
-            shouldThrow<ExperimentAlreadyRegistered> {
+            shouldNotThrow<Exception> {
                 cadabra.startExperiment(SimpleExperiment1::class, resolver1A)
-            }
-        }
-
-        "not register experiments with the same ID" {
-            cadabra.startExperiment(SimpleExperiment1::class, resolver1A)
-
-            shouldThrow<ExperimentAlreadyRegistered> {
-                cadabra.startExperiment(SimpleExperiment2::class, resolver2)
             }
         }
 
