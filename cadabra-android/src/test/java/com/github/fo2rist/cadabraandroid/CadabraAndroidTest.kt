@@ -49,7 +49,7 @@ class CadabraAndroidTest {
     }
 
     @Test
-    fun `getXyz throws exception when default resource is missing`() {
+    fun `get%RESOURCE% throws exception when default resource is missing`() {
         exceptionRule.expect(Resources.NotFoundException::class.java)
         cadabraAndroid.getExperimentContext(SimpleAndroidExperiment::class).getStringId(-1)
 

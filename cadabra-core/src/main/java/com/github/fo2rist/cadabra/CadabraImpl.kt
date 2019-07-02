@@ -3,6 +3,7 @@ package com.github.fo2rist.cadabra
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.github.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.github.fo2rist.cadabra.exceptions.UnknownVariant
+import com.github.fo2rist.cadabra.exceptions.VariantNotFound
 import com.github.fo2rist.cadabra.resolvers.StaticResolver
 import kotlin.reflect.KClass
 
@@ -22,7 +23,6 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         val experimentResolverPair = resolversMap[experiment.experimentId]
             ?: throw ExperimentNotFound("Experiment '$experiment' is not registered")
 
-        // TODO maybe return just default option, or create registration with default option 06/22/2019
         val result = experimentResolverPair.second?.variant
             ?: throw ExperimentNotStarted("Experiment '$experiment' is not started")
 
@@ -72,6 +72,16 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         resolver: Resolver<V>
     ): CadabraConfig where V : Variant, V : Enum<V> {
         updateResolver(experiment, resolver)
+        return this
+    }
+
+    override fun <V> startExperiment(
+        experiment: KClass<V>
+    ): CadabraConfig where V : Variant, V : Enum<V> {
+        val defaultVariant = experiment.defaultVariant
+            ?: throw VariantNotFound("$experiment class doesn't have enum constants")
+
+        updateResolver(experiment.java, StaticResolver(defaultVariant))
         return this
     }
 
