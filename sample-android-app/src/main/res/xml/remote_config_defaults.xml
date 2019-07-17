@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
+        <key>FirebaseKeyValueExperiment</key>
+        <value>KV1</value>
+    </entry>
+    <entry>
         <key>cadabra_experiments</key>
         <value>
             {
-                "FirebaseExperiment": "F1"
+                "FirebaseJsonExperiment": "F1"
             }
         </value>
     </entry>

@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.github.fo2rist.cadabra.MainActivityParameters.MessageStyle
 import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
-import com.github.fo2rist.cadabra.greetingexperiment.FirebaseExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.FirebaseJsonExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.FirebaseKeyValueExperiment
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 /**
  * Sample activity.
@@ -19,12 +21,14 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity() {
 
+    private val cadabraAndroid = CadabraAndroid.instance
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val firstExperimentVariant = CadabraAndroid.instance.getExperimentVariant(PlainExperiment::class)
+        val firstExperimentVariant = cadabraAndroid.getExperimentVariant(PlainExperiment::class)
         fab1.setOnClickListener {
             when (firstExperimentVariant.type) {
                 MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
@@ -32,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val secondExperimentContext = CadabraAndroid.instance.getExperimentContext(AutoResourceExperiment::class)
+        val secondExperimentContext = cadabraAndroid.getExperimentContext(AutoResourceExperiment::class)
         fab2.setOnClickListener {
             showAlertDialog(
                 secondExperimentContext.getStringId(R.string.greeting_title_a),
@@ -40,10 +44,14 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        val thirdExperimentContext = CadabraAndroid.instance.getExperimentContext(FirebaseExperiment::class)
+        val thirdExperimentContext = cadabraAndroid.getExperimentContext(FirebaseJsonExperiment::class)
         fab3.setOnClickListener {
             showSnackbar(thirdExperimentContext.getStringId(R.string.remote_greeting_f1))
         }
+
+        val fourthExperimentContext = cadabraAndroid.getExperimentContext(FirebaseKeyValueExperiment::class)
+        label_experiment4.text = fourthExperimentContext.getString(R.string.firebase_key_value_kv0)
+
     }
 
     private fun showToast(@StringRes message: Int) {
