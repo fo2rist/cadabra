@@ -6,12 +6,11 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import io.kotlintest.TestCase
 import io.kotlintest.specs.WordSpec
 import org.mockito.Mockito
-
-private const val CONFIG_KEY = "config_key"
 
 class FirebaseConfigProviderKotlinTest : WordSpec() {
     private lateinit var firebaseConfigMock: FirebaseRemoteConfig
@@ -26,26 +25,24 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
     init {
         "FirebaseConfigProvider constructor" should {
 
-            "not fetch any config if not asked" {
+            "not fetch any config when fetchAutomatically==false, useDefaults==false" {
                 val configProvider = FirebaseConfigProvider(
-                    configKey = CONFIG_KEY,
                     fetchAutomatically = false,
                     useDefaults = false,
+                    rootElementKey = null,
                     firebaseConfig = firebaseConfigMock
                 )
-
-                verifyZeroInteractions(firebaseConfigMock)
 
                 configProvider.onAttached()
 
                 verifyZeroInteractions(firebaseConfigMock)
             }
 
-            "use default config if asked but only after attached" {
+            "use default config after attached when useDefaults==true" {
                 val configProvider = FirebaseConfigProvider(
-                    configKey = CONFIG_KEY,
                     fetchAutomatically = false,
                     useDefaults = true,
+                    rootElementKey = null,
                     firebaseConfig = firebaseConfigMock
                 )
                 verifyZeroInteractions(firebaseConfigMock)
@@ -53,14 +50,14 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
                 configProvider.onAttached()
 
                 verify(firebaseConfigMock, never()).fetchAndActivate()
-                verify(firebaseConfigMock).getString(CONFIG_KEY)
+                verify(firebaseConfigMock).getAll()
             }
 
-            "fetch latest config if asked but only after attached" {
+            "fetch latest config after attached when fetchAutomatically==true" {
                 val configProvider = FirebaseConfigProvider(
-                    configKey = CONFIG_KEY,
                     fetchAutomatically = true,
                     useDefaults = false,
+                    rootElementKey = null,
                     firebaseConfig = firebaseConfigMock
                 )
                 verifyZeroInteractions(firebaseConfigMock)
@@ -68,26 +65,39 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
                 configProvider.onAttached()
 
                 verify(firebaseConfigMock).fetchAndActivate()
-                verify(firebaseConfigMock).getString(CONFIG_KEY)
+                verify(firebaseConfigMock).getAll()
             }
         }
 
         "startExperimentFromRemoteConfig" should {
 
-            "fetch the current config" {
+            "fetch the current config as Key:Value when configKey==null" {
                 val configProvider = FirebaseConfigProvider(
-                    configKey = CONFIG_KEY,
                     fetchAutomatically = false,
                     useDefaults = false,
+                    rootElementKey = null,
                     firebaseConfig = firebaseConfigMock
                 )
 
-                verifyZeroInteractions(firebaseConfigMock)
+                configProvider.startExperimentFromRemoteConfig()
+
+                verify(firebaseConfigMock).getAll()
+                verifyNoMoreInteractions(firebaseConfigMock)
+            }
+
+            "fetch the current config as Json when configKey!=null" {
+                val rootElementKey = "dummy"
+                val configProvider = FirebaseConfigProvider(
+                    fetchAutomatically = false,
+                    useDefaults = false,
+                    rootElementKey = rootElementKey,
+                    firebaseConfig = firebaseConfigMock
+                )
 
                 configProvider.startExperimentFromRemoteConfig()
 
-                verify(firebaseConfigMock).getString(CONFIG_KEY)
-                verify(firebaseConfigMock, never()).fetchAndActivate()
+                verify(firebaseConfigMock).getString(rootElementKey)
+                verifyNoMoreInteractions(firebaseConfigMock)
             }
         }
     }

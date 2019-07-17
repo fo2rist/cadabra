@@ -11,7 +11,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class ExperimentConfigExtensionsTest {
+class ExperimentConfigFactoryTest {
 
     @Test(expected = JSONException::class)
     fun `configFromJson throws exception for incorrect Json`() {

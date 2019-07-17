@@ -17,5 +17,9 @@ class ExperimentsConfig private constructor(
         fun create(vararg config: Pair<String, String>): ExperimentsConfig {
             return ExperimentsConfig(config.toMap())
         }
+
+        fun create(config: Map<String, String>): ExperimentsConfig {
+            return ExperimentsConfig(config)
+        }
     }
 }

@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">CadabraTestApp</string>
     <string name="title_activity_main">Cadabra Main Activity</string>
-    <string name="greeting_title_a">Hello my friend!</string>
-    <string name="greeting_title_b">Hello world</string>
-    <string name="remote_greeting_f1">Hello from Firebase</string>
-    <string name="remote_greeting_f2">Welcome to remote world</string>
+
+    <string name="greeting_title_a">Hello my friend! (A)</string>
+    <string name="greeting_title_b">Hello world (B)</string>
+
+    <string name="remote_greeting_f1">Hello from Firebase (local)</string>
+    <string name="remote_greeting_f2">Welcome to Firebase (remote)</string>
+
+    <string name="firebase_key_value_empty">Unable to load Firebase driven experiment</string>
+    <string name="firebase_key_value_kv0">Firebase driven Default Variant</string>
+    <string name="firebase_key_value_kv1">Firebase driven Local Variant</string>
+    <string name="firebase_key_value_kv2">Firebase driven Remote Variant</string>
 </resources>

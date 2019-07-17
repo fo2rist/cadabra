@@ -55,8 +55,9 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
         }
     }
 
-    override fun startExperimentsAsync(configProvider: ExperimentsConfigProvider) {
+    override fun startExperimentsAsync(configProvider: ExperimentsConfigProvider): CadabraConfig {
         configProvider.attach(this::startExperiments)
+        return this
     }
 
     override fun <V> startExperiment(

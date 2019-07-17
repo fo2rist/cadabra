@@ -97,7 +97,7 @@ interface CadabraConfig {
      * When it provides the new config via [provideConfig][ExperimentsConfigProvider.provideConfig] it works the same
      * way as [startExperiments].
      */
-    fun startExperimentsAsync(configProvider: ExperimentsConfigProvider)
+    fun startExperimentsAsync(configProvider: ExperimentsConfigProvider): CadabraConfig
 
     /**
      * Register & start experiment.

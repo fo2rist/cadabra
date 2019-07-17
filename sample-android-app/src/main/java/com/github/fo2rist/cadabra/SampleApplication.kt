@@ -3,7 +3,8 @@ package com.github.fo2rist.cadabra
 import android.app.Application
 import com.github.fo2rist.cadabra.firebase.FirebaseConfigProvider
 import com.github.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
-import com.github.fo2rist.cadabra.greetingexperiment.FirebaseExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.FirebaseJsonExperiment
+import com.github.fo2rist.cadabra.greetingexperiment.FirebaseKeyValueExperiment
 import com.github.fo2rist.cadabra.greetingexperiment.PlainExperiment
 import com.github.fo2rist.cadabra.resolvers.RandomResolver
 import com.github.fo2rist.cadabraandroid.CadabraAndroid
@@ -35,10 +36,12 @@ class SampleApplication : Application() {
                 AutoResourceExperiment::class,
                 RandomResolver(AutoResourceExperiment::class)
             )
-            // register experiment without starting
-            .registerExperiment(FirebaseExperiment::class)
-            // load experiments config from Firebase
-            .startExperimentsAsync(FirebaseConfigProvider())
+            // register experiments without starting
+            .registerExperiment(FirebaseJsonExperiment::class)
+            .registerExperiment(FirebaseKeyValueExperiment::class)
+            // load experiments config from Firebase with two ways of loading
+            .startExperimentsAsync(FirebaseConfigProvider())                                       // as key:values
+            .startExperimentsAsync(FirebaseConfigProvider(rootElementKey = "cadabra_experiments")) // and as Json
     }
 
     @Suppress("MagicNumber")

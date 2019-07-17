@@ -43,4 +43,4 @@ internal fun <V : Variant> Class<V>.variantByName(name: String): V? {
  * Get first enum item or null if class doesn't have any.
  */
 internal val <V : Variant> KClass<V>.defaultVariant: V?
-    get() = this.java.enumConstants?.getOrNull(0)
+    get() = this.java.enumConstants.getOrNull(0)
