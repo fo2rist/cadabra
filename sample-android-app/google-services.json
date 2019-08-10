@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:798255363753:android:c8c833c91b275928",
+        "mobilesdk_app_id": "1:798255363753:android:d18ba82c81251893",
         "android_client_info": {
-          "package_name": "com.github.fo2rist.cadabra"
+          "package_name": "com.fo2rist.cadabra"
         }
       },
       "oauth_client": [

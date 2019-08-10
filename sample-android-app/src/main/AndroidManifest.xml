@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="GoogleAppIndexingWarning"
-    package="com.github.fo2rist.cadabra">
+    package="com.fo2rist.cadabra">
 
     <application
         android:name=".SampleApplication"
