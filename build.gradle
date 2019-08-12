@@ -16,8 +16,10 @@ buildscript {
         // for google-services plugin
         classpath 'com.google.gms:google-services:4.2.0'
 
-        // for com.vanniktech.android.junit.jacoco plugin
+        // for jacoco aggregator plugin
         classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.15.0"
+        // for maven publisher plugin
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.8.0'
     }
 }
 
