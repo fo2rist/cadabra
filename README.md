@@ -1,7 +1,9 @@
 Cadabra is the A/B testing library that simplifies objects creation 
 at the different application layers.
 
-Cadabra either takes the external A/B test configuration, or makes the decision based on supplied end-user id.     
+Cadabra either takes the external A/B test configuration, or makes the decision based on supplied end-user id.
+
+To publish use `gw uploadArchives --no-daemon --no-parallel`
 
 [![Build Status](https://app.bitrise.io/app/5781b73059466ba5/status.svg?token=fvX37th1yPPTTe6L2iVzuQ&branch=master)](https://app.bitrise.io/app/5781b73059466ba5)
 
