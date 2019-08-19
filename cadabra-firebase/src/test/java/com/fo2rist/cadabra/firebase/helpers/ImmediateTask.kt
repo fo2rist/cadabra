@@ -10,7 +10,7 @@ import java.util.concurrent.Executor
 /**
  * Completes immediately and calls callbacks immediately when addXxxListener called.
  */
-class ImmediateTask : Task<Boolean>() {
+class ImmediateTask<T> : Task<T>() {
     override fun isComplete(): Boolean {
         return true
     }
@@ -19,38 +19,38 @@ class ImmediateTask : Task<Boolean>() {
         return null
     }
 
-    override fun addOnFailureListener(p0: OnFailureListener): Task<Boolean> {
+    override fun addOnFailureListener(p0: OnFailureListener): Task<T> {
         return this
     }
 
-    override fun addOnFailureListener(p0: Executor, p1: OnFailureListener): Task<Boolean> {
+    override fun addOnFailureListener(p0: Executor, p1: OnFailureListener): Task<T> {
         return this
     }
 
-    override fun addOnFailureListener(p0: Activity, p1: OnFailureListener): Task<Boolean> {
+    override fun addOnFailureListener(p0: Activity, p1: OnFailureListener): Task<T> {
         return this
     }
 
-    override fun getResult(): Boolean? {
-        return true
+    override fun getResult(): T? {
+        return null
     }
 
-    override fun <X : Throwable?> getResult(p0: Class<X>): Boolean? {
-        return true
+    override fun <X : Throwable?> getResult(p0: Class<X>): T? {
+        return null
     }
 
-    override fun addOnSuccessListener(p0: OnSuccessListener<in Boolean>): Task<Boolean> {
-        p0.onSuccess(true)
+    override fun addOnSuccessListener(p0: OnSuccessListener<in T>): Task<T> {
+        p0.onSuccess(null)
         return this
     }
 
-    override fun addOnSuccessListener(p0: Executor, p1: OnSuccessListener<in Boolean>): Task<Boolean> {
-        p1.onSuccess(true)
+    override fun addOnSuccessListener(p0: Executor, p1: OnSuccessListener<in T>): Task<T> {
+        p1.onSuccess(null)
         return this
     }
 
-    override fun addOnSuccessListener(p0: Activity, p1: OnSuccessListener<in Boolean>): Task<Boolean> {
-        p1.onSuccess(true)
+    override fun addOnSuccessListener(p0: Activity, p1: OnSuccessListener<in T>): Task<T> {
+        p1.onSuccess(null)
         return this
     }
 
@@ -62,17 +62,17 @@ class ImmediateTask : Task<Boolean>() {
         return false
     }
 
-    override fun addOnCompleteListener(p0: OnCompleteListener<Boolean>): Task<Boolean> {
+    override fun addOnCompleteListener(p0: OnCompleteListener<T>): Task<T> {
         p0.onComplete(this)
         return this
     }
 
-    override fun addOnCompleteListener(p0: Activity, p1: OnCompleteListener<Boolean>): Task<Boolean> {
+    override fun addOnCompleteListener(p0: Activity, p1: OnCompleteListener<T>): Task<T> {
         p1.onComplete(this)
         return this
     }
 
-    override fun addOnCompleteListener(p0: Executor, p1: OnCompleteListener<Boolean>): Task<Boolean> {
+    override fun addOnCompleteListener(p0: Executor, p1: OnCompleteListener<T>): Task<T> {
         p1.onComplete(this)
         return this
     }
