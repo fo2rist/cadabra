@@ -4,6 +4,7 @@ import android.support.annotation.VisibleForTesting
 import com.fo2rist.cadabra.ExperimentsConfigProvider
 import com.fo2rist.cadabra.android.configFromJson
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigValue
 
 /**
  * [ExperimentsConfigProvider] that starts experiments automatically by Firebase Remote Config.
@@ -61,7 +62,10 @@ class FirebaseConfigProvider : ExperimentsConfigProvider {
         }
 
         if (this.fetchAutomatically) {
-            firebaseConfig.fetchAndActivate().addOnCompleteListener {
+            firebaseConfig.fetch().addOnCompleteListener {
+                // note that activateFetched won't be required after migration to firebase 17 that provides
+                // fetchAndActivate method
+                firebaseConfig.activateFetched()
                 startExperimentFromRemoteConfig()
             }
         }
@@ -78,4 +82,10 @@ class FirebaseConfigProvider : ExperimentsConfigProvider {
         }
         provideConfig(config)
     }
+
+    //implementation of firebase v17 getAll function missed in v15
+    private val FirebaseRemoteConfig.all: Map<String, FirebaseRemoteConfigValue>
+        get() {
+            return this.getKeysByPrefix("").associateWith { this.getValue(it) }
+        }
 }

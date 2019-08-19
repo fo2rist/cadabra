@@ -18,7 +18,7 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
     override fun beforeTest(testCase: TestCase) {
         firebaseConfigMock = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS) {
             on { getString(any()) }.thenReturn("")
-            on { fetchAndActivate() }.thenReturn(ImmediateTask())
+            on { fetch() }.thenReturn(ImmediateTask())
         }
     }
 
@@ -49,8 +49,8 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
 
                 configProvider.onAttached()
 
-                verify(firebaseConfigMock, never()).fetchAndActivate()
-                verify(firebaseConfigMock).getAll()
+                verify(firebaseConfigMock, never()).fetch()
+                verify(firebaseConfigMock).getKeysByPrefix("")
             }
 
             "fetch latest config after attached when fetchAutomatically==true" {
@@ -64,8 +64,8 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
 
                 configProvider.onAttached()
 
-                verify(firebaseConfigMock).fetchAndActivate()
-                verify(firebaseConfigMock).getAll()
+                verify(firebaseConfigMock).fetch()
+                verify(firebaseConfigMock).getKeysByPrefix("")
             }
         }
 
@@ -81,7 +81,7 @@ class FirebaseConfigProviderKotlinTest : WordSpec() {
 
                 configProvider.startExperimentFromRemoteConfig()
 
-                verify(firebaseConfigMock).getAll()
+                verify(firebaseConfigMock).getKeysByPrefix("")
                 verifyNoMoreInteractions(firebaseConfigMock)
             }
 
