@@ -1,0 +1,4 @@
+include ':cadabra-android'
+include ':cadabra-core'
+include ':cadabra-firebase'
+include ':sample-android-app'
