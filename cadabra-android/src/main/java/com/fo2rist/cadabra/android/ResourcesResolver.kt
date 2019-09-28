@@ -13,11 +13,12 @@ internal class ResourcesResolver(
 
     /**
      * Resolve string by given default string and experiment variant to apply.
+     * @param variantName [com.fo2rist.cadabra.Variant.name] of active variant or null
      * @return string for given variant or [defaultResourceId] if variant-specific option not found.
      * @throws android.content.res.Resources.NotFoundException if default resource doesn't exist.
      */
     @StringRes
-    fun resolveStringResource(context: Context, @StringRes defaultResourceId: Int, variantName: String): Int {
+    fun resolveStringResource(context: Context, @StringRes defaultResourceId: Int, variantName: String?): Int {
         val defaultResourceName = context.stringIdToName(defaultResourceId)
         val resourceName = namesGenerator.generateResourceName(defaultResourceName, variantName)
         return context.stringNameToId(resourceName)
@@ -26,11 +27,12 @@ internal class ResourcesResolver(
 
     /**
      * Resolve layout by given default layout and experiment variant to apply.
+     * @param variantName [com.fo2rist.cadabra.Variant.name] of active variant or null
      * @return string for given variant or [defaultResourceId] if variant-specific option not found.
      * @throws android.content.res.Resources.NotFoundException if default resource doesn't exist.
      */
     @LayoutRes
-    fun resolveLayoutResource(context: Context, @LayoutRes defaultResourceId: Int, variantName: String): Int {
+    fun resolveLayoutResource(context: Context, @LayoutRes defaultResourceId: Int, variantName: String?): Int {
         val defaultResourceName = context.layoutIdToName(defaultResourceId)
         val resourceName = namesGenerator.generateResourceName(defaultResourceName, variantName)
         return context.layoutNameToId(resourceName)
