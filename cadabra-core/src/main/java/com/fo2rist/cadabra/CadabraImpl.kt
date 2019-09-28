@@ -1,7 +1,6 @@
 package com.fo2rist.cadabra
 
 import com.fo2rist.cadabra.exceptions.ExperimentNotFound
-import com.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.fo2rist.cadabra.exceptions.UnknownVariant
 import com.fo2rist.cadabra.exceptions.VariantNotFound
 import com.fo2rist.cadabra.resolvers.StaticResolver
@@ -15,16 +14,16 @@ internal class CadabraImpl : Cadabra, CadabraConfig {
 
     private val resolversMap: MutableMap<String, Pair<Class<out Variant>, Resolver<*>?>> = mutableMapOf()
 
-    override fun <V : Variant> getExperimentVariant(experiment: KClass<V>): V {
+    override fun <V : Variant> getExperimentVariant(experiment: KClass<V>): V? {
         return getExperimentVariant(experiment.java)
     }
 
-    override fun <V : Variant> getExperimentVariant(experiment: Class<V>): V {
+    override fun <V : Variant> getExperimentVariant(experiment: Class<V>): V? {
         val experimentResolverPair = resolversMap[experiment.experimentId]
             ?: throw ExperimentNotFound("Experiment '$experiment' is not registered")
 
         val result = experimentResolverPair.second?.variant
-            ?: throw ExperimentNotStarted("Experiment '$experiment' is not started")
+            ?: return null
 
         return experiment.cast(result)
     }
