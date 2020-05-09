@@ -46,6 +46,7 @@ interface Cadabra {
     companion object {
 
         private val _instance = CadabraImpl()
+
         /**
          * Entry point Cadabra experiment variants usage.
          */
