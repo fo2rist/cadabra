@@ -30,9 +30,10 @@ class MainActivity : AppCompatActivity() {
 
         val firstExperimentVariant = cadabraAndroid.getExperimentVariant(PlainExperiment::class)
         fab1.setOnClickListener {
-            when (firstExperimentVariant.type) {
+            when (firstExperimentVariant?.type) {
                 MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
                 MessageStyle.SNACK -> showSnackbar(firstExperimentVariant.message)
+                else -> showToast("Experiment 'PlainExperiment' wasn't started")
             }
         }
 
@@ -55,6 +56,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToast(@StringRes message: Int) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG)
+            .show()
+    }
+
+    private fun showToast(message: CharSequence) {
         Toast.makeText(this, message, Toast.LENGTH_LONG)
             .show()
     }
