@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 
@@ -19,6 +20,7 @@ import kotlin.test.assertEquals
  * Robolectric serves as the provider of sorta real context, good enough to access resources.
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [28])
 class CadabraAndroidTest {
 
     companion object {
