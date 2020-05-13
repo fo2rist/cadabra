@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!--  Ignore issues that report that baseline issues were present  -->
+    <issue id="LintBaseline" severity="ignore" />
+
+    <!-- Don't want to migrate to AndroidX yet -->
+    <issue id="GradleCompatible" severity="ignore"/>
+    <issue id="GradleDependency" severity="ignore"/>
+</lint>
