@@ -44,9 +44,9 @@ class VariantResourcesImplKotlinTest : WordSpec({
         }
 
         "resolve getLayout through resolver's resolveLayoutResource with null" {
-            nullVariantResources.getString(0)
+            nullVariantResources.getLayoutId(0)
 
-            verify(resourcesResolverMock).resolveStringResource(any(), any(), isNull())
+            verify(resourcesResolverMock).resolveLayoutResource(any(), any(), isNull())
         }
     }
 }) {
