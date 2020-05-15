@@ -1,3 +1,4 @@
+# IDE files
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -8,11 +9,20 @@
 *.iml
 .externalNativeBuild
 
-.kotlintest
-
+# Local gradle config and binary
 /local.properties
 .gradle
+
+# Build artifacts
 build/
 bin/
 
+# MacOS preview file
 .DS_Store
+
+# Jekyll local site artifacts
+Gemfile.lock
+_site/
+
+# Other
+.kotlintest
