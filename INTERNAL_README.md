@@ -1,3 +1,9 @@
-To build use `./gradlew assembleRelease`
+To build: `./gradlew assembleRelease`
 
-To publish use `./gradlew  uploadArchives --no-daemon --no-parallel`
+To publish: `./gradlew  uploadArchives --no-daemon --no-parallel`
+
+To check GitHub pages locally
+```
+cd docs
+bundle exec jekyll serve --trace
+```
