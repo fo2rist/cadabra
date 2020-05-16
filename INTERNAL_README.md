@@ -7,3 +7,5 @@ To check GitHub pages locally
 cd docs
 bundle exec jekyll serve --trace
 ```
+
+To regenerate API docs: `./dokka.sh`

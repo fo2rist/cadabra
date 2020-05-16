@@ -1,0 +1,5 @@
+$dokka.format:jekyll
+$dokka.linkExtension:html
+
+com.fo2rist.cadabra.android
+com.fo2rist.cadabra.android.exceptions

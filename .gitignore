@@ -26,3 +26,4 @@ _site/
 
 # Other
 .kotlintest
+dokka-fatjar.jar

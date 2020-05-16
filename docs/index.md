@@ -104,4 +104,4 @@ showAlertDialog(
 A demo project can be found [in the repository](https://github.com/fo2rist/cadabra/tree/master/sample-android-app)
 
 # API documentation
-See each class documentation: TBD
+See each class [documentation](./api)
