@@ -3,7 +3,7 @@ To build: `./gradlew assembleRelease`
 To publish: `./gradlew  uploadArchives --no-daemon --no-parallel`
 
 To check GitHub pages locally
-```
+```sh
 cd docs
 bundle exec jekyll serve --trace
 ```
