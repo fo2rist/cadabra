@@ -14,11 +14,11 @@ else
 fi
 
 # generate the docs one by one to have separate module names
-java -jar $DOKKA_JAR -output $DOCS_DIR -format jekyll -pass -module cadabra-core -skipEmptyPackages -src cadabra-core/src/main
+java -jar $DOKKA_JAR -output $DOCS_DIR -format jekyll -pass -module cadabra-core -skipEmptyPackages -src cadabra-core/src/main -include cadabra-core/doc.md
 
-java -jar $DOKKA_JAR -output $DOCS_DIR -format jekyll -pass -module cadabra-android -skipEmptyPackages -src cadabra-android/src/main 
+java -jar $DOKKA_JAR -output $DOCS_DIR -format jekyll -pass -module cadabra-android -skipEmptyPackages -src cadabra-android/src/main -include cadabra-android/doc.md
 
-java -jar $DOKKA_JAR -output $DOCS_DIR -format jekyll -pass -module cadabra-firebase -skipEmptyPackages -src cadabra-firebase/src/main
+java -jar $DOKKA_JAR -output $DOCS_DIR -format jekyll -pass -module cadabra-firebase -skipEmptyPackages -src cadabra-firebase/src/main -include cadabra-firebase/doc.md
 
 # generate libraries index manually
 echo "---

@@ -6,6 +6,8 @@ title: com.fo2rist.cadabra - cadabra-core
 
 ## Package com.fo2rist.cadabra
 
+Main entry point and core concepts: Variant, Resolver and Config.
+
 ### Types
 
 | [Cadabra](-cadabra/index.html) | Cadabra A/B experiments.`interface Cadabra` |

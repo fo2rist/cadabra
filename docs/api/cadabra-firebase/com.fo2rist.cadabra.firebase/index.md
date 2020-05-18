@@ -6,6 +6,8 @@ title: com.fo2rist.cadabra.firebase - cadabra-firebase
 
 ## Package com.fo2rist.cadabra.firebase
 
+Contain Resolver implementation that can parse data from Firebase Remote Config.
+
 ### Types
 
 | [FirebaseConfigProvider](-firebase-config-provider/index.html) | [ExperimentsConfigProvider](#) that starts experiments automatically by Firebase Remote Config. Supports two ways for providing config.`class FirebaseConfigProvider` |

@@ -6,6 +6,8 @@ title: com.fo2rist.cadabra.exceptions - cadabra-core
 
 ## Package com.fo2rist.cadabra.exceptions
 
+Exceptions Cadabra may throw is misused.
+
 ### Exceptions
 
 | [ExperimentNotFound](-experiment-not-found/index.html) | Access of experiment by unknown ID attempt.`class ExperimentNotFound : `[`IllegalStateException`](https://docs.oracle.com/javase/6/docs/api/java/lang/IllegalStateException.html) |

@@ -6,6 +6,8 @@ title: com.fo2rist.cadabra.resolvers - cadabra-core
 
 ## Package com.fo2rist.cadabra.resolvers
 
+Handy resolvers that can simplify testing Cadabra.
+
 ### Types
 
 | [RandomResolver](-random-resolver/index.html) | [Resolver](../com.fo2rist.cadabra/-resolver/index.html) that picks random variant every time asked. Can be useful for testing.`class RandomResolver<V : `[`Variant`](../com.fo2rist.cadabra/-variant/index.html)`> : `[`Resolver`](../com.fo2rist.cadabra/-resolver/index.html)`<V>` |

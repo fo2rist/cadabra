@@ -6,6 +6,8 @@ title: com.fo2rist.cadabra.android - cadabra-android
 
 ## Package com.fo2rist.cadabra.android
 
+Main entry point for Cadabra if used for Android and classes for automatic resource resolving.
+
 ### Types
 
 | [CadabraAndroid](-cadabra-android/index.html) | Android-specific cadabra extension that supports resources injection. Usage:`interface CadabraAndroid` |
