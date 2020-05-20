@@ -7,9 +7,9 @@ import io.kotlintest.specs.WordSpec
 
 private const val CORRECT_KEY = "NotToBeIgnored"
 private const val CORRECT_VALUE = "Value"
-private val REMOTE_CONFIG = mapOf<String, FirebaseRemoteConfigValue>(
+private val REMOTE_CONFIG = mapOf<String, FirebaseRemoteConfigValue?>(
     "ToBeIgnoredEmptyValue" to FakeFirebaseRemoteConfigValue(""),
-    "ToBeIgnoredNullValue" to FakeFirebaseRemoteConfigValue(""),
+    "ToBeIgnoredNullValue" to null,
     CORRECT_KEY to FakeFirebaseRemoteConfigValue(CORRECT_VALUE)
 )
 
