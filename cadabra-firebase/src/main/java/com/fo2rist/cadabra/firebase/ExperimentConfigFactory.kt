@@ -1,3 +1,4 @@
+@file:JvmName("ExperimentConfigFactory")
 package com.fo2rist.cadabra.firebase
 
 import com.fo2rist.cadabra.ExperimentsConfig
