@@ -1,3 +1,5 @@
+![cadabra](docs/assets/cadabra_logo_slim.png)
+
 Cadabra is the A/B testing library that simplifies objects creation 
 at the different application layers.
 
