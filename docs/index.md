@@ -1,3 +1,10 @@
+---
+title: A/B testing
+---
+
+# What is Cadabra?
+A lightweight modular, testable library for A/B testing that wraps the complexity of async loading and json parsing, and exposes clean type-safe interface for UI code.
+
 # Why Cadabra?
 ### Compatibility
 Works with Java, Kotlin, can be used without dependencies on Android
