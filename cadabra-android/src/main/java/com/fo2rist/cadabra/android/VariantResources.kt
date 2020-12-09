@@ -1,8 +1,8 @@
 package com.fo2rist.cadabra.android
 
 import android.content.Context
-import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import com.fo2rist.cadabra.Variant
 
 /**
