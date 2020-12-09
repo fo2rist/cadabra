@@ -1,6 +1,6 @@
 package com.fo2rist.cadabra.greetingexperiment;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import com.fo2rist.cadabra.MainActivityParameters.MessageStyle;
 import com.fo2rist.cadabra.R;
 import com.fo2rist.cadabra.Variant;

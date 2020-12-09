@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "0.0.1"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,7 +37,7 @@ dependencies {
     api project(path: ':cadabra-android')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.google.firebase:firebase-config:16.0.0' //kept at 16 to support API level 15
+    implementation 'com.google.firebase:firebase-config:20.0.2'
 
     //Kotlintest
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
