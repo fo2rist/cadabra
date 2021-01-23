@@ -1,9 +1,8 @@
 ![cadabra](docs/assets/cadabra_logo_slim.png)
 
-Cadabra is the A/B testing library that simplifies objects creation 
-at the different application layers.
-
-Cadabra either takes the external A/B test configuration, or makes the decision based on supplied end-user id.
+# Cadabra A/B experiments library
+Cadabra simplifies configuration of A/B experiments and access to experiments' config
+It keeps the registry of all experiments in one place and provides non-blocking API for access and helpers for Android UI
 
 See the [documentation](https://fo2rist.github.io/cadabra/) for mor details.
 
