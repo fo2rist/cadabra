@@ -9,9 +9,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [28])
 class ResourcesResolverTest {
     private val context by lazy { RuntimeEnvironment.application }
     private lateinit var namesGeneratorMock: ResourceNamesGenerator
@@ -28,7 +30,7 @@ class ResourcesResolverTest {
     }
 
     @Test
-    fun `resolveStringResource gives string R-string-RESOLVED_NAME for existing name`() {
+    fun `resolveStringResource gives R-string-RESOLVED_NAME for existing name`() {
         mockResolvedResourceName("test_b")
 
         assertEquals(R.string.test_b,
@@ -37,7 +39,7 @@ class ResourcesResolverTest {
     }
 
     @Test
-    fun `resolveStringResource gives string default resource for nonexistent name`() {
+    fun `resolveStringResource gives R-string-DEFAULT resource for nonexistent name`() {
         mockResolvedResourceName("test_nonexistent")
 
         assertEquals(R.string.test_a,
@@ -46,7 +48,7 @@ class ResourcesResolverTest {
     }
 
     @Test
-    fun `resolveLayoutResource gives layout R-layout-RESOLVED_NAME for existing name`() {
+    fun `resolveLayoutResource gives R-layout-RESOLVED_NAME for existing name`() {
         mockResolvedResourceName("test_b")
 
         assertEquals(
@@ -56,7 +58,7 @@ class ResourcesResolverTest {
     }
 
     @Test
-    fun `resolveLayoutResource gives string default resource for nonexistent name`() {
+    fun `resolveLayoutResource gives R-layout-DEFAULT resource for nonexistent name`() {
         mockResolvedResourceName("test_nonexistent")
 
         assertEquals(R.layout.test_a,

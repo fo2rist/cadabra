@@ -6,6 +6,7 @@ import com.fo2rist.cadabra.CadabraConfig
 import com.fo2rist.cadabra.Variant
 import com.fo2rist.cadabra.android.CadabraAndroid.Companion.initialize
 import com.fo2rist.cadabra.android.exceptions.NotInitializedException
+import com.fo2rist.cadabra.exceptions.ExperimentNotFound
 import kotlin.reflect.KClass
 
 /**
@@ -20,13 +21,17 @@ interface CadabraAndroid : Cadabra {
 
     /**
      * Get Android resources accessor for active experiment variant.
-     * @throws IllegalStateException if was not initialized via [initialize].
+     * If the experiment is not started the context would behave as normal Android context.
+     * @throws ExperimentNotFound if experiment is not registered
+     * @throws IllegalStateException if Cadabra was not initialized via [initialize].
      */
     fun getExperimentContext(variantClass: KClass<out Variant>): ExperimentContext
 
     /**
      * Get Android resources accessor for active experiment variant.
-     * @throws NotInitializedException if was not initialized via [initialize].
+     * If the experiment is not started the context would behave as normal Android context.
+     * @throws ExperimentNotFound if experiment is not registered
+     * @throws NotInitializedException if Cadabra was not initialized via [initialize].
      */
     fun getExperimentContext(variantClass: Class<out Variant>): ExperimentContext
 

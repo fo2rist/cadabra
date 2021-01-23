@@ -12,7 +12,13 @@ class ExperimentsConfigKotlinTest : WordSpec({
 
     val singleItemConfig = ExperimentsConfig.create(EXPERIMENT_ID to VARIANT_NAME)
 
-    "get" should {
+    "create" should {
+        "produce same result for pairs and map argument" {
+            singleItemConfig.entries shouldBe ExperimentsConfig.create(mapOf(EXPERIMENT_ID to VARIANT_NAME)).entries
+        }
+    }
+
+    "operator get" should {
         "return non null for existing experiment" {
             singleItemConfig[EXPERIMENT_ID] shouldNotBe null
         }

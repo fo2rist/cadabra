@@ -1,8 +1,8 @@
 package com.fo2rist.cadabra.android
 
 import android.content.Context
-import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import com.fo2rist.cadabra.Variant
 
 /**
@@ -17,6 +17,8 @@ import com.fo2rist.cadabra.Variant
  *
  *  Then if the experiment is resolved to variant B, cadabra will return "title_b" and "layout_b" when
  *  getStringId(R.string.title_a), getLayoutId(R.layout.layout_a) are called.
+ *
+ *  If the experiment wasn't started resolves all resources into defaults.
  */
 interface VariantResources {
     /**
@@ -51,19 +53,19 @@ interface VariantResources {
  */
 internal class VariantResourcesImpl(
     private val context: Context,
-    private val variant: Variant,
+    private val variant: Variant?,
     private val resourcesResolver: ResourcesResolver = defaultResourcesResolver
 ) : VariantResources {
 
     @StringRes
     override fun getStringId(@StringRes defaultResourceId: Int): Int =
-        resourcesResolver.resolveStringResource(context, defaultResourceId, variant.name)
+        resourcesResolver.resolveStringResource(context, defaultResourceId, variant?.name)
 
     override fun getString(@StringRes defaultResourceId: Int): String =
         context.resources.getString(getStringId(defaultResourceId))
 
     override fun getLayoutId(defaultResourceId: Int): Int =
-        resourcesResolver.resolveLayoutResource(context, defaultResourceId, variant.name)
+        resourcesResolver.resolveLayoutResource(context, defaultResourceId, variant?.name)
 
     companion object {
         private val defaultResourcesResolver = ResourcesResolver()

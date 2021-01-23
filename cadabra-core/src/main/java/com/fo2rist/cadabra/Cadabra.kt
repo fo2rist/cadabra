@@ -1,7 +1,6 @@
 package com.fo2rist.cadabra
 
 import com.fo2rist.cadabra.exceptions.ExperimentNotFound
-import com.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.fo2rist.cadabra.exceptions.UnknownVariant
 import com.fo2rist.cadabra.exceptions.VariantNotFound
 import kotlin.reflect.KClass
@@ -30,9 +29,9 @@ interface Cadabra {
      * @see [CadabraConfig.registerExperiment]
      * @see [CadabraConfig.startExperiment]
      * @throws ExperimentNotFound if experiment is not registered
-     * @throws ExperimentNotStarted is experiment was not started
+     * @return null if the experiment was not started
      */
-    fun <V : Variant> getExperimentVariant(experiment: KClass<V>): V
+    fun <V : Variant> getExperimentVariant(experiment: KClass<V>): V?
 
     /**
      * Get experiment variant to apply for this user/session by [Variant] class.
@@ -40,13 +39,14 @@ interface Cadabra {
      * @see [CadabraConfig.registerExperiment]
      * @see [CadabraConfig.startExperiment]
      * @throws ExperimentNotFound if experiment is not registered
-     * @throws ExperimentNotStarted is experiment was not started
+     * @return null if the experiment was not started
      */
-    fun <V : Variant> getExperimentVariant(experiment: Class<V>): V
+    fun <V : Variant> getExperimentVariant(experiment: Class<V>): V?
 
     companion object {
 
         private val _instance = CadabraImpl()
+
         /**
          * Entry point Cadabra experiment variants usage.
          */

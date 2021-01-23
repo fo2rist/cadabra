@@ -1,10 +1,10 @@
 package com.fo2rist.cadabra
 
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.fo2rist.cadabra.MainActivityParameters.MessageStyle
 import com.fo2rist.cadabra.greetingexperiment.AutoResourceExperiment
@@ -30,9 +30,10 @@ class MainActivity : AppCompatActivity() {
 
         val firstExperimentVariant = cadabraAndroid.getExperimentVariant(PlainExperiment::class)
         fab1.setOnClickListener {
-            when (firstExperimentVariant.type) {
+            when (firstExperimentVariant?.type) {
                 MessageStyle.TOAST -> showToast(firstExperimentVariant.message)
                 MessageStyle.SNACK -> showSnackbar(firstExperimentVariant.message)
+                else -> showToast("Experiment 'PlainExperiment' wasn't started")
             }
         }
 
@@ -55,6 +56,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToast(@StringRes message: Int) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG)
+            .show()
+    }
+
+    private fun showToast(message: CharSequence) {
         Toast.makeText(this, message, Toast.LENGTH_LONG)
             .show()
     }

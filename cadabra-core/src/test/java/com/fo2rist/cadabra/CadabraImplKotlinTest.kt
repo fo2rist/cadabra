@@ -1,7 +1,6 @@
 package com.fo2rist.cadabra
 
 import com.fo2rist.cadabra.exceptions.ExperimentNotFound
-import com.fo2rist.cadabra.exceptions.ExperimentNotStarted
 import com.fo2rist.cadabra.exceptions.UnknownVariant
 import com.fo2rist.cadabra.exceptions.VariantNotFound
 import com.fo2rist.cadabra.resolvers.StaticResolver
@@ -62,12 +61,11 @@ class CadabraImplKotlinTest : WordSpec({
             }
         }
 
-        "throw ExperimentNotStarted when experiment registered but not started" {
+        "return null when experiment registered but not started" {
             cadabra.registerExperiment(SimpleExperiment1::class)
 
-            shouldThrow<ExperimentNotStarted> {
-                cadabra.getExperimentVariant(SimpleExperiment1::class)
-            }
+
+            cadabra.getExperimentVariant(SimpleExperiment1::class) shouldBe null
         }
 
         "return given variant when experiment started" {

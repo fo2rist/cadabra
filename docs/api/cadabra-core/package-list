@@ -1,0 +1,7 @@
+$dokka.format:jekyll
+$dokka.linkExtension:html
+$dokka.location:com.fo2rist.cadabra$experimentId#java.lang.Class((com.fo2rist.cadabra.experimentId.V))com.fo2rist.cadabra/java.lang.-class/experiment-id.html
+$dokka.location:com.fo2rist.cadabra$experimentId#kotlin.reflect.KClass((com.fo2rist.cadabra.experimentId.V))com.fo2rist.cadabra/kotlin.reflect.-k-class/experiment-id.html
+com.fo2rist.cadabra
+com.fo2rist.cadabra.exceptions
+com.fo2rist.cadabra.resolvers

@@ -1,0 +1,29 @@
+subprojects {
+    project.afterEvaluate {
+        if (isAndroidAppOrLib(project)) {
+            applyLintOptionsConfig(project, android.lintOptions)
+        } else if (isJavaLibrary(project)) {
+            project.apply plugin: 'com.android.lint'
+
+            applyLintOptionsConfig(project, lintOptions)
+        }
+    }
+}
+
+static boolean isAndroidAppOrLib(project) {
+    return project.getPlugins().hasPlugin('android') ||
+            project.getPlugins().hasPlugin('android-library')
+}
+
+static boolean isJavaLibrary(project) {
+    return project.getPlugins().hasPlugin('java-library')
+}
+
+static def applyLintOptionsConfig(project, lintOptions) {
+    project.configure(lintOptions) {
+        abortOnError false
+        absolutePaths false
+        lintConfig project.rootProject.file('lint.xml')
+        baseline project.rootProject.file("lint-baseline.xml")
+    }
+}
