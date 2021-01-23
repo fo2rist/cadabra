@@ -2,6 +2,11 @@
 
 buildscript {
     ext.kotlin_version = '1.4.21'
+    ext.build_tools_version = '29.0.3'
+    ext.min_sdk = 16
+    ext.target_sdk = 30
+
+    ext.lib_android_version_code = 4
 
     repositories {
         google()
@@ -23,10 +28,6 @@ buildscript {
     }
 }
 
-apply {
-    from 'lint.gradle'
-}
-
 allprojects {
     repositories {
         google()
@@ -39,6 +40,10 @@ allprojects {
             mavenCentral()
         }
     }
+}
+
+apply {
+    from 'lint.gradle'
 }
 
 //adds report aggregation tasks such as jacocoTestReport & jacocoTestReport<FLAVOR><BUILD_TYPE>
