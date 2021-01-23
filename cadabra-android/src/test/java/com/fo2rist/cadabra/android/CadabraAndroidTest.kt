@@ -11,16 +11,13 @@ import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
-
 
 /**
  * Integration test to make sure actual resources are used when the real context is present.
  * Robolectric serves as the provider of sorta real context, good enough to access resources.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [28])
 class CadabraAndroidTest {
 
     companion object {
@@ -51,7 +48,7 @@ class CadabraAndroidTest {
     }
 
     @Test
-    fun `get%RESOURCE% throws exception when default resource is missing`() {
+    fun `getRESOURCE throws exception when default resource is missing`() {
         exceptionRule.expect(Resources.NotFoundException::class.java)
         cadabraAndroid.getExperimentContext(SimpleAndroidExperiment::class).getStringId(-1)
 

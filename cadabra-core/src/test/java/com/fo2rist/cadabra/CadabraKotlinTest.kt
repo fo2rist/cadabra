@@ -1,9 +1,9 @@
 package com.fo2rist.cadabra
 
-import io.kotlintest.matchers.beOfType
-import io.kotlintest.matchers.types.shouldBeSameInstanceAs
-import io.kotlintest.should
-import io.kotlintest.specs.WordSpec
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.kotest.core.spec.style.WordSpec
+import io.kotest.matchers.should
+import io.kotest.matchers.types.beOfType
 
 class CadabraKotlinTest : WordSpec({
     "Cadabra.instance" should {

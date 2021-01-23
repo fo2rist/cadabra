@@ -8,8 +8,8 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import io.kotlintest.TestCase
-import io.kotlintest.specs.WordSpec
+import io.kotest.core.test.TestCase
+import io.kotest.core.spec.style.WordSpec
 import org.mockito.Mockito
 
 class FirebaseConfigProviderKotlinTest : WordSpec() {

@@ -1,6 +1,6 @@
 package com.fo2rist.cadabra
 
-import io.kotlintest.shouldNotBe
+import io.kotest.matchers.shouldNotBe
 import org.spekframework.spek2.Spek
 
 class CadabraSpek : Spek({

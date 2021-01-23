@@ -1,8 +1,8 @@
 package com.fo2rist.cadabra
 
-import io.kotlintest.TestCase
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.WordSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.WordSpec
+import io.kotest.core.test.TestCase
 
 private val DUMMY_CONFIG = ExperimentsConfig.create()
 

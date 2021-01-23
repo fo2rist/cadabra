@@ -1,9 +1,9 @@
 package com.fo2rist.cadabra
 
 import com.fo2rist.cadabra.testdata.SimpleExperiment
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldNotBe
-import io.kotlintest.specs.WordSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import io.kotest.core.spec.style.WordSpec
 
 val EXPERIMENT_ID = SimpleExperiment::class.experimentId
 val VARIANT_NAME = SimpleExperiment.A.name
