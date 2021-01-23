@@ -19,7 +19,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // for google-services plugin
-        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.google.gms:google-services:4.3.4'
 
         // for jacoco aggregator plugin
         classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.15.0"
