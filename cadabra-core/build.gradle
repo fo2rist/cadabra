@@ -6,13 +6,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    // Kotlintest
+    // Kotest
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
+    testImplementation 'io.kotest:kotest-runner-junit5:4.3.2'
 
     // Spek
-    testImplementation "org.spekframework.spek2:spek-dsl-jvm:2.0.4"
-    testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:2.0.4"
+    testImplementation 'org.spekframework.spek2:spek-dsl-jvm:2.0.15'
+    testRuntimeOnly 'org.spekframework.spek2:spek-runner-junit5:2.0.15'
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }

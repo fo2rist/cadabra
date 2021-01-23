@@ -4,11 +4,11 @@ import com.fo2rist.cadabra.exceptions.ExperimentNotFound
 import com.fo2rist.cadabra.exceptions.UnknownVariant
 import com.fo2rist.cadabra.exceptions.VariantNotFound
 import com.fo2rist.cadabra.resolvers.StaticResolver
-import io.kotlintest.TestCase
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldNotThrow
-import io.kotlintest.shouldThrow
-import io.kotlintest.specs.WordSpec
+import io.kotest.core.test.TestCase
+import io.kotest.matchers.shouldBe
+import io.kotest.assertions.throwables.shouldNotThrow
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.WordSpec
 import com.fo2rist.cadabra.SimpleExperiment as SimpleExperiment2
 import com.fo2rist.cadabra.testdata.SimpleExperiment as SimpleExperiment1
 

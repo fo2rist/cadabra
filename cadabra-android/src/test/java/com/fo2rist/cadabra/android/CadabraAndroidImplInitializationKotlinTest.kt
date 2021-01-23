@@ -3,9 +3,9 @@ package com.fo2rist.cadabra.android
 import com.fo2rist.cadabra.android.exceptions.NotInitializedException
 import com.fo2rist.cadabra.android.testdata.SimpleAndroidExperiment
 import com.fo2rist.cadabra.android.testdata.createAppContextMock
-import io.kotlintest.shouldNotThrow
-import io.kotlintest.shouldThrow
-import io.kotlintest.specs.WordSpec
+import io.kotest.assertions.throwables.shouldNotThrow
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.WordSpec
 
 class CadabraAndroidImplInitializationKotlinTest : WordSpec({
 

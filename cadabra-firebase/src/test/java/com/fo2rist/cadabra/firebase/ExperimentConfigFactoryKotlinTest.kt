@@ -2,8 +2,8 @@ package com.fo2rist.cadabra.firebase
 
 import com.fo2rist.cadabra.firebase.helpers.FakeFirebaseRemoteConfigValue
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigValue
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.WordSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.WordSpec
 
 private const val CORRECT_KEY = "NotToBeIgnored"
 private const val CORRECT_VALUE = "Value"

@@ -9,11 +9,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [28])
 class ResourcesResolverTest {
     private val context by lazy { RuntimeEnvironment.application }
     private lateinit var namesGeneratorMock: ResourceNamesGenerator

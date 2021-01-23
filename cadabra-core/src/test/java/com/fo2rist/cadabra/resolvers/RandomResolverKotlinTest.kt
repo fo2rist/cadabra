@@ -1,8 +1,8 @@
 package com.fo2rist.cadabra.resolvers
 
 import com.fo2rist.cadabra.testdata.SimpleExperiment
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.WordSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.WordSpec
 
 class RandomResolverKotlinTest : WordSpec({
 

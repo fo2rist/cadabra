@@ -5,10 +5,10 @@ import com.fo2rist.cadabra.android.testdata.SimpleAndroidExperiment
 import com.fo2rist.cadabra.android.testdata.SimpleAndroidStaticResolver
 import com.fo2rist.cadabra.android.testdata.createAppContextMock
 import com.fo2rist.cadabra.exceptions.ExperimentNotFound
-import io.kotlintest.Spec
-import io.kotlintest.shouldNotBe
-import io.kotlintest.shouldThrow
-import io.kotlintest.specs.WordSpec
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.Spec
+import io.kotest.core.spec.style.WordSpec
+import io.kotest.matchers.shouldNotBe
 
 private enum class NotRegisteredExperiment : Variant
 

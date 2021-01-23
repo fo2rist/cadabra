@@ -8,8 +8,8 @@ import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.isNull
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import io.kotlintest.TestCase
-import io.kotlintest.specs.WordSpec
+import io.kotest.core.test.TestCase
+import io.kotest.core.spec.style.WordSpec
 
 private val TEST_VARIANT = SimpleAndroidExperiment.B
 

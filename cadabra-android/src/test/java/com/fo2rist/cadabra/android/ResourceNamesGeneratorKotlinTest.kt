@@ -1,7 +1,7 @@
 package com.fo2rist.cadabra.android
 
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.WordSpec
+import io.kotest.core.spec.style.WordSpec
+import io.kotest.matchers.shouldBe
 
 class ResourceNamesGeneratorKotlinTest : WordSpec({
 
