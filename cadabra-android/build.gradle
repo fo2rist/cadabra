@@ -36,7 +36,7 @@ dependencies {
     api project(path: ':cadabra-core')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //Kotlintest
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
